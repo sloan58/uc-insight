@@ -27,6 +27,18 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot($router);
+
+        $router->bind('phone', function($mac) {
+            return \App\Phone::where('mac', $mac)->first();
+        });
+
+        $router->bind('bulk', function($process_id) {
+            return \App\Bulk::where('process_id', $process_id)->first();
+        });
+
+        $router->bind('cluster', function($id){
+            return \App\Cluster::where('id',$id)->first();
+        });
     }
 
     /**

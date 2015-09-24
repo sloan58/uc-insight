@@ -19,10 +19,15 @@ Route::get('sql/history', [
     'as' => 'sql.history',
     'uses' => 'SqlController@history'
 ]);
-
 Route::resource('sql','SqlController',
     ['except' => ['destroy','edit']]
 );
+
+//Registration
+Route::resource('registration', 'RegistrationController');
+
+//Cluster
+Route::resource('cluster', 'ClusterController');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

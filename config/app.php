@@ -146,6 +146,13 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
+         * UC-Insight Dependencices
+         */
+        Collective\Html\HtmlServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
+
+
+        /*
          * UC-Insight Development Dependencies
          */
         Barryvdh\Debugbar\ServiceProvider::class,
@@ -200,6 +207,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Flash'     => Laracasts\Flash\Flash::class,
+
 
 
     ],
