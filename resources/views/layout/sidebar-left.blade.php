@@ -7,7 +7,7 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="{{asset('/assets/fonts/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+              <img src="{{ Gravatar::src('martin.sloan@karma-tek.com') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>Alexander Pierce</p>
