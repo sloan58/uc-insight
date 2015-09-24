@@ -1,0 +1,23 @@
+{
+  "name": "uc-insight",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sloan58/uc-insight",
+  "authors": [
+    "sloan58 <martin.sloan@karma-tek.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": "~2.3.0",
+    "bootstrap": "~3.3.5",
+    "fontawesome": "~4.4.0",
+    "jquery": "~2.1.4",
+    "ionicons": "~2.0.1"
+  }
+}
