@@ -32,6 +32,18 @@ elixir(function(mix) {
         ).copy(
             bowerLoc + 'admin-lte/dist/css/skins/skin-blue.min.css',
             resourceLoc + 'less/skin-blue.min.less'
+        ).copy(
+            bowerLoc + 'admin-lte/plugins/iCheck/square/blue.css',
+            resourceLoc + 'less/blue.less'
+        ).copy(
+            bowerLoc + 'CodeMirror/lib/codemirror.css',
+            resourceLoc + 'less/codemirror.less'
+        ).copy(
+            bowerLoc + 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css',
+            resourceLoc + 'less/dataTables.less'
+        ).copy(
+            bowerLoc + 'datatables-buttons/css',
+            resourceLoc + 'sass/'
     );
 
     //Copy Javascript Dependencies
@@ -48,8 +60,26 @@ elixir(function(mix) {
             bowerLoc + 'admin-lte/dist/js/pages/dashboard.js',
             resourceLoc + 'js/dashboard.js'
         ).copy(
+            bowerLoc + 'admin-lte/plugins/iCheck/icheck.min.js',
+            resourceLoc + 'js/icheck.min.js'
+        ).copy(
             bowerLoc + 'admin-lte/dist/js/pages/dashboard2.js',
             resourceLoc + 'js/dashboard2.js'
+        ).copy(
+            bowerLoc + 'CodeMirror/lib/codemirror.js',
+            resourceLoc + 'js/codemirror.js'
+        ).copy(
+            bowerLoc + 'CodeMirror/mode/sql/sql.js',
+            resourceLoc + 'js/codemirror-sql.js'
+        ).copy(
+            bowerLoc + 'datatables/media/js/jquery.dataTables.js',
+            resourceLoc + 'js/dataTables.js'
+        ).copy(
+            bowerLoc + 'datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.js',
+            resourceLoc + 'js/dataTables.bootstrap.js'
+        ).copy(
+            bowerLoc + 'datatables-buttons/js',
+            resourceLoc + 'js/'
     );
 
     //Copy Font Dependencies
@@ -69,6 +99,18 @@ elixir(function(mix) {
         'jquery.js',
         'bootstrap.js',
         'admin-lte.min.js',
+        'icheck.min.js',
+        'codemirror.js',
+        'codemirror-sql.js',
+        'dataTables.js',
+        'dataTables.bootstrap.js',
+        'dataTables.buttons.js',
+        'buttons.bootstrap.js',
+        'buttons.colVis.js',
+        'buttons.flash.js',
+        'buttons.html5.js',
+        'buttons.jqueryui.js',
+        'buttons.print.js',
         'app.js'
     ], 'public/assets/js/app.js', 'resources/assets/js/');
 
@@ -76,7 +118,20 @@ elixir(function(mix) {
     mix.less([
         'AdminLTE.less',
         'skin-blue.min.less',
+        'blue.less',
+        'codemirror.less',
+        'dataTables.less',
         'app.less'
     ], 'public/assets/css');
+
+    // Compile Sass
+    mix.sass([
+        'app.scss',
+        'buttons.bootstrap.scss',
+        'buttons.dataTables.scss',
+        'common.scss',
+        'mixins.scss'
+
+    ], 'public/assets/css/sass');
 
 });
