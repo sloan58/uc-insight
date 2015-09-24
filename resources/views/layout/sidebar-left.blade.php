@@ -10,7 +10,7 @@
               <img src="{{ Gravatar::src('martin.sloan@karma-tek.com') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>Martin Sloan</p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
