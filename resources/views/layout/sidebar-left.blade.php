@@ -43,7 +43,7 @@
             <li class="treeview {{ areActiveRoutes(['registration.index','registration.index']) }}">
               <a href="#"><i class="fa fa-link"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="#">CUCM Service Status</a></li>
+                <li><a href="{{ url('/service') }}">CUCM Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
               </ul>
             </li>

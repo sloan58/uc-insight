@@ -24,7 +24,7 @@ class RegistrationController extends Controller
     {
         $cluster = Cluster::where('id',$request->cluster)->first();
 
-//        Temp override to send message to Lab
+        // Temp override to send message to Lab
         $cluster->ip = "10.134.174.10";
 
         $axl = new AxlSoap(
