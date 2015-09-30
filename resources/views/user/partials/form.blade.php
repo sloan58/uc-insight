@@ -11,12 +11,12 @@
 <!-- Password Form Input -->
 <div class="form-group">
     {!! Form::label('Password','Password') !!}
-    {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! Form::password('password', ['class' => 'form-control','placeholder' => '********************']) !!}
 </div>
 <!-- Confirm Password Form Input -->
 <div class="form-group">
-    {!! Form::label('Password','Password') !!}
-    {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! Form::label('Confirm Password','Confirm Password') !!}
+    {!! Form::password('confirm_password', ['class' => 'form-control','placeholder' => '********************']) !!}
 </div>
 <!-- Roles Form Input -->
 <div class="form-group">

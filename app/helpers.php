@@ -111,6 +111,7 @@ function processRisResults($risResults,$phoneArray)
                 $deviceAndIp[$i]['IsRegistered'] = false;
                 $deviceAndIp[$i]['Description'] = "Unavailable";
                 $deviceAndIp[$i]['Model'] = "Unavailable";
+                $deviceAndIp[$i]['Product'] = "Unavailable";
             }
             $i++;
         }

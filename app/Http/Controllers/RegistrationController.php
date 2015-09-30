@@ -22,10 +22,9 @@ class RegistrationController extends Controller
 
     public function store(Request $request)
     {
-        $cluster = Cluster::where('id',$request->cluster)->first();
+        //TODO: Fix timeout issue with Cluster A
 
-        // Temp override to send message to Lab
-        $cluster->ip = "10.134.174.10";
+        $cluster = Cluster::where('id',$request->cluster)->first();
 
         $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
@@ -34,7 +33,7 @@ class RegistrationController extends Controller
             $cluster->password
         );
 
-        $this->sxml = new RisSoap(
+        $sxml = new RisSoap(
             app_path() . '/CiscoAPI/sxml/schema/RISAPI.wsdl',
             'https://' . $cluster->ip . ':8443/realtimeservice/services/RisPort',
             $cluster->username,
@@ -55,7 +54,7 @@ class RegistrationController extends Controller
 
         foreach(array_chunk($deviceList, 1000, true) as $chunk)
         {
-            $SelectCmDeviceResult = $this->sxml->getDeviceIp($chunk);
+            $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
             $res = processRisResults($SelectCmDeviceResult,$chunk);
 
             foreach($res as $i)

@@ -25,7 +25,6 @@
             <form method="POST" action="/sql"
                     class="form-horizontal">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="folder" value="">
                   <div class="form-group">
                     <div class="col-sm-8">
                       <textarea type="textarea" id="sqlStatement" name="sqlStatement" placeholder="Enter SQL Statement Here..."
@@ -35,7 +34,7 @@
                         Submit
                       </button>
                   </div>
-          </form>
+            </form>
          </div>
     </div>
 </div>

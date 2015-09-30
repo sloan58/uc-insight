@@ -19,6 +19,12 @@ class UserController extends Controller
 
     }
 
+    public function create()
+    {
+        $roles = Role::lists('name','id');
+        return view('user.create', compact('roles'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

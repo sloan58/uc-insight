@@ -100,6 +100,7 @@ class RisSoap {
          * No Errors
          * Process Results
          */
+
         return $response["SelectCmDeviceResult"];
         $SelectCmDeviceResult = $response["SelectCmDeviceResult"];
 

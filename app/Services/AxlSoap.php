@@ -22,15 +22,15 @@ class AxlSoap {
      * @param $user
      * @param $pass
      */
-    public function __construct()
+    public function __construct($wsdlPath,$location,$user,$pass)
     {
-        $this->client = new SoapClient(app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
+        $this->client = new SoapClient($wsdlPath,
             [
                 'trace'=> true,
                 'exceptions'=> true,
-                'location' => env('CUCM_AXL_LOCATION'),
-                'login' => env('CUCM_LOGIN'),
-                'password' => env('CUCM_PASS')
+                'location' => $location,
+                'login' => $user,
+                'password' => $pass
             ]
         );
 

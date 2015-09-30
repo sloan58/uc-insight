@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cluster;
+use App\Services\AxlSoap;
 use App\Services\SqlSelect;
 use App\Sql;
 use Illuminate\Http\Request;
@@ -28,7 +30,8 @@ class SqlController extends Controller
      */
     public function index()
     {
-        return view('sql.index');
+        $clusters = Cluster::lists('name','id');
+        return view('sql.index', compact('clusters'));
     }
 
     /**
@@ -38,13 +41,23 @@ class SqlController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->cluster);
+
         $sql = $request->input('sqlStatement');
 
         Sql::firstOrCreate([
             'sql' => $sql
         ]);
 
-        $sqlSelect = new SqlSelect();
+        $cluster = Cluster::where('id',$request->cluster)->first();
+
+        $sqlSelect = new AxlSoap(
+            app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
+            'https://' . $cluster->ip . ':8443/axl/',
+            $cluster->username,
+            $cluster->password
+        );
+
         $data = $sqlSelect->executeQuery($sql);
         if(!isset($data->faultstring))
         {
