@@ -32,6 +32,9 @@ Route::resource('cluster', 'ClusterController');
 //Service Status
 Route::resource('service', 'ServiceStatusController');
 
+//User
+Route::resource('user', 'UserController');
+
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

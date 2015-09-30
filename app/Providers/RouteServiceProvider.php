@@ -39,6 +39,10 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('cluster', function($id){
             return \App\Cluster::where('id',$id)->first();
         });
+
+        $router->bind('user', function($name){
+            return \App\User::where('name',$name)->first();
+        });
     }
 
     /**

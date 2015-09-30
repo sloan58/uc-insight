@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$cluster->name}} Settings</div>
+                    <div class="panel-heading">{{$user->name}} User Settings</div>
                     <div class="panel-body">
 
-                        {!! Form::model($cluster, ['route' => ['cluster.update', $cluster->id], 'method' => 'PUT']) !!}
+                        {!! Form::model($user, ['route' => ['user.update', $user->name], 'method' => 'PUT']) !!}
 
-                            {!! Form::open(['route' => 'cluster.store']) !!}
+                            {!! Form::open(['route' => 'user.store']) !!}
 
-                                @include('cluster.partials.form')
+                                @include('user.partials.form')
 
                             {!! Form::close() !!}
 

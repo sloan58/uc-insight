@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "laracasts/flash": "^1.3",
         "laravelcollective/html": "^5.1",
-        "thomaswelton/laravel-gravatar": "^1.0"
+        "thomaswelton/laravel-gravatar": "^1.0",
+        "zizaco/entrust": "dev-laravel-5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

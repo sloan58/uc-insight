@@ -47,10 +47,11 @@
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
               </ul>
             </li>
-            <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show']) }}">
-              <a href="#"><i class="fa fa-link"></i> <span>UC Clusters</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show','user.index','user.create','user.show']) }}">
+              <a href="#"><i class="fa fa-link"></i> <span>Admin Settings</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('/cluster') }}">Add/Edit Clusters</a></li>
+                <li><a href="{{ url('/user') }}">Users</a></li>
+                <li><a href="{{ url('/cluster') }}">UC Clusters</a></li>
               </ul>
             </li>
           </ul><!-- /.sidebar-menu -->
