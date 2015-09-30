@@ -91,15 +91,7 @@ class ClusterController extends Controller
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;
-
-        if($request->password != $cluster->password && $request->password != '')
-        {
-
-            $cluster->password = $request->password;
-            $cluster->save();
-
-        }
-
+        $cluster->password = checkPassword($cluster->password,$request->password);
         $cluster->save();
 
         Flash::success('Cluster info updated!');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,8 @@ class DashboardController extends Controller
 
     public function index()
     {
+        Flash::success('Welcome Back, ' . auth()->user()->name .'!');
+
         return view('dashboard.index');
     }
 }

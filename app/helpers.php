@@ -359,3 +359,24 @@ function areActiveRoutes(Array $routes, $output = "active")
     }
 
 }
+
+/*
+|--------------------------------------------------------------------------
+| Check Passwords
+|--------------------------------------------------------------------------
+|
+| Compare passwords to see if they need to be updated in the database.
+|
+*/
+function checkPassword($currentPassword,$toCheckPassword)
+{
+    if($currentPassword != $toCheckPassword && $toCheckPassword != '')
+    {
+
+        return $toCheckPassword;
+
+    } else {
+
+        return $currentPassword;
+    }
+}

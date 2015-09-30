@@ -19,6 +19,7 @@
     "fontawesome": "~4.4.0",
     "jquery": "~2.1.4",
     "ionicons": "~2.0.1",
-    "CodeMirror": "~5.7.0"
+    "CodeMirror": "~5.7.0",
+    "select2": "~4.0.0"
   }
 }

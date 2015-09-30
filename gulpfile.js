@@ -44,6 +44,9 @@ elixir(function(mix) {
         ).copy(
             bowerLoc + 'datatables-buttons/css',
             resourceLoc + 'sass/'
+        ).copy(
+            bowerLoc + 'select2/dist/css/select2.min.css',
+            resourceLoc + 'less/select2.less'
     );
 
     //Copy Javascript Dependencies
@@ -80,6 +83,9 @@ elixir(function(mix) {
         ).copy(
             bowerLoc + 'datatables-buttons/js',
             resourceLoc + 'js/'
+        ).copy(
+            bowerLoc + 'select2/dist/js/select2.full.min.js',
+            resourceLoc + 'js/select2.js'
     );
 
     //Copy Font Dependencies
@@ -111,6 +117,7 @@ elixir(function(mix) {
         'buttons.html5.js',
         'buttons.jqueryui.js',
         'buttons.print.js',
+        'select2.js',
         'app.js'
     ], 'public/assets/js/app.js', 'resources/assets/js/');
 
@@ -121,6 +128,7 @@ elixir(function(mix) {
         'blue.less',
         'codemirror.less',
         'dataTables.less',
+        'select2.less',
         'app.less'
     ], 'public/assets/css');
 

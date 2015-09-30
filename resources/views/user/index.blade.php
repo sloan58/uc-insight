@@ -43,7 +43,7 @@
         $(function() {
             $('#cluster-table').dataTable({
                 order: [[0, "asc"]],
-                dom: '<"top">Bfrt<"bottom"lip><"clear">',
+                dom: '<"top">frt<"bottom"lip><"clear">',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ],

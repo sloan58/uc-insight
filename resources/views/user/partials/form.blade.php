@@ -20,8 +20,8 @@
 </div>
 <!-- Roles Form Input -->
 <div class="form-group">
-    {!! Form::label('Roles','Roles') !!}
-    {!! Form::select('roles', $roles, null, ['class' => 'form-control', 'multiple']) !!}
+    {!! Form::label('role_list','Roles') !!}
+    {!! Form::select('role_list[]', $roles, null, ['id' => 'role_list', 'class' => 'form-control', 'multiple']) !!}
 </div>
 <!--  Form Input -->
 <div class="form-group">

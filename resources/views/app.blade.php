@@ -59,7 +59,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
         <section class="content">
 
-           @yield('content')
+            @include('layout.flash')
+
+            @yield('content')
 
         </section><!-- /.content -->
 

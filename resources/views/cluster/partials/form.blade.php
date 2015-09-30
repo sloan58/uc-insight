@@ -16,7 +16,7 @@
 <!-- Password Form Input -->
 <div class="form-group">
     {!! Form::label('Password','Password') !!}
-    {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! Form::password('password', ['class' => 'form-control', 'placeholder' => '********************']) !!}
 </div>
 <!--  Form Input -->
 <div class="form-group">
