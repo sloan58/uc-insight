@@ -20,6 +20,7 @@ class ServiceStatusController extends Controller
 
         return view('service.index', compact('clusters'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +29,6 @@ class ServiceStatusController extends Controller
     public function store(Request $request)
     {
         $cluster = Cluster::where('id',$request->cluster)->first();
-
-        // Temp override to send message to Lab
-        $cluster->ip = "10.134.174.10";
 
         $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
@@ -47,18 +45,9 @@ class ServiceStatusController extends Controller
 
         foreach($clusterNodes as $node)
         {
-
-            //  Temp override to point to lab
-            $ris = new ControlCenterSoap($cluster->ip, $cluster->username, $cluster->password);
+            $ris = new ControlCenterSoap($node->name, $cluster->username, $cluster->password);
             $res = $ris->getServiceStatus();
             $clusterStatus[$node->name] = $res;
-
-            break;
-
-//            $ris = new ControlCenterSoap($node->name, $cluster->username, $cluster->password);
-//            $res = $ris->getServiceStatus();
-//            $clusterStatus[$node->name] = $res;
-
         }
 
         return view('service.show', compact('clusterStatus'));

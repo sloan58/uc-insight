@@ -9,7 +9,20 @@
                     <div class="panel-heading">Choose a Cluster for Registration Reporting</div>
                     <div class="panel-body text-center">
 
-                        @include('partials.cluster-selector')
+                        {!! Form::open(['route' => 'service.store']) !!}
+
+                        <!--  Form Input -->
+                        <div class="form-group">
+                            {!! Form::label('Cluster Selector','Cluster Selector') !!}
+                            {!! Form::select('cluster', $clusters) !!}
+                        </div>
+
+                        <!-- Submit Form Input -->
+                        <div class="form-group">
+                            {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+                        </div>
+
+                        {!! Form::close() !!}
 
                     </div>
                 </div>

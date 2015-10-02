@@ -41,27 +41,27 @@ class SqlController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->cluster);
-
         $sql = $request->input('sqlStatement');
 
         Sql::firstOrCreate([
             'sql' => $sql
         ]);
 
-        $cluster = Cluster::where('id',$request->cluster)->first();
+//        $cluster = Cluster::where('id',$request->cluster)->first();
+        $cluster = Cluster::where('id','12')->first();
 
-        $sqlSelect = new AxlSoap(
+        $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
             'https://' . $cluster->ip . ':8443/axl/',
             $cluster->username,
             $cluster->password
         );
 
-        $data = $sqlSelect->executeQuery($sql);
+        $data = executeQuery($axl,$sql);
+
         if(!isset($data->faultstring))
         {
-            $format = $sqlSelect->getHeaders($data);
+            $format = getHeaders($data);
         }
 
         return view('sql.index',compact('data','format','sql'));
@@ -69,6 +69,8 @@ class SqlController extends Controller
 
     public function show($sql)
     {
+//        TODO: Fix this whole thing....
+
         $sqlSelect = new SqlSelect();
         $data = $sqlSelect->executeQuery($sql);
         if(!isset($data->faultstring))
