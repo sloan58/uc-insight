@@ -88,33 +88,30 @@ function processRisResults($risResults,$phoneArray)
 {
     $i = 0;
 
-    foreach (array_chunk($phoneArray,1000,true) as $chunk)
+    foreach($phoneArray as $k => $v)
     {
-        foreach($chunk as $k => $v)
+        $deviceAndIp[$i]['DeviceName'] = $v['Item'];
+
+        if(isset($risResults->CmNodes))
         {
-            $deviceAndIp[$i]['DeviceName'] = $v['Item'];
-
-            if(isset($risResults->CmNodes))
+            foreach ($risResults->CmNodes as $cmNode)
             {
-                foreach ($risResults->CmNodes as $cmNode)
-                {
-                    if (!isset($cmNode->CmDevices[0])) continue;
+                if (!isset($cmNode->CmDevices[0])) continue;
 
-                    list($deviceAndIp[$i]['IpAddress'],$deviceAndIp[$i]['IsRegistered'],$deviceAndIp[$i]['Description'],$deviceAndIp[$i]['Product']) = searchForIp($cmNode->CmDevices,$deviceAndIp[$i]['DeviceName']);
+                list($deviceAndIp[$i]['IpAddress'],$deviceAndIp[$i]['IsRegistered'],$deviceAndIp[$i]['Description'],$deviceAndIp[$i]['Product']) = searchForIp($cmNode->CmDevices,$deviceAndIp[$i]['DeviceName']);
 
-                    if (filter_var($deviceAndIp[$i]['IpAddress'], FILTER_VALIDATE_IP)) break;
-                }
+                if (filter_var($deviceAndIp[$i]['IpAddress'], FILTER_VALIDATE_IP)) break;
             }
-            if (!isset($deviceAndIp[$i]['IpAddress']))
-            {
-                $deviceAndIp[$i]['IpAddress'] = "Unregistered/Unknown";
-                $deviceAndIp[$i]['IsRegistered'] = false;
-                $deviceAndIp[$i]['Description'] = "Unavailable";
-                $deviceAndIp[$i]['Model'] = "Unavailable";
-                $deviceAndIp[$i]['Product'] = "Unavailable";
-            }
-            $i++;
         }
+        if (!isset($deviceAndIp[$i]['IpAddress']))
+        {
+            $deviceAndIp[$i]['IpAddress'] = "Unregistered/Unknown";
+            $deviceAndIp[$i]['IsRegistered'] = false;
+            $deviceAndIp[$i]['Description'] = "Unavailable";
+            $deviceAndIp[$i]['Model'] = "Unavailable";
+            $deviceAndIp[$i]['Product'] = "Unavailable";
+        }
+        $i++;
     }
     return $deviceAndIp;
 }

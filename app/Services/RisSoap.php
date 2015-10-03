@@ -76,7 +76,7 @@ class RisSoap {
         try {
             $response = $this->client->SelectCmDevice('',[
                 'MaxReturnedDevices'=>'1000',
-                'Class'=>'Phone',
+                'Class'=>'Any',
                 'Model'=>'255',
                 'Status'=>'Any',
                 'NodeName'=>'',
