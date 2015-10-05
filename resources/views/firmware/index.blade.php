@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Choose a Cluster for Registration Reporting</div>
+                    <div class="panel-heading">Choose a Cluster for Firmware Reporting</div>
                     <div class="panel-body text-center">
 
-                        {!! Form::open(['route' => 'registration.store']) !!}
+                        {!! Form::open(['route' => 'firmware.store']) !!}
 
                         <!--  Form Input -->
                         <div class="form-group">

@@ -4,25 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Cluster;
 use App\Services\AxlSoap;
-use App\Services\PreparePhoneList;
 use App\Services\RisSoap;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
+use Log;
 
-class RegistrationController extends Controller
+class FirmwareController extends Controller
 {
     public function index()
     {
         $clusters = Cluster::lists('name','id');
 
-        return view('registration.index', compact('clusters'));
+        return view('firmware.index', compact('clusters'));
     }
 
     public function store(Request $request)
     {
         set_time_limit(0);
+
+        //TODO: Fix timeout issue with Cluster A
 
         $cluster = Cluster::where('id',$request->cluster)->first();
 
@@ -40,7 +42,7 @@ class RegistrationController extends Controller
             $cluster->password
         );
 
-        $res = $axl->executeSQLQuery('SELECT name FROM device');
+        $res = $axl->executeSQLQuery('SELECT name FROM device WHERE tkclass = 1 AND tkdeviceprofile = 0 AND tkmodel IN ("435","436","437")');
 
         $deviceList = [];
 
@@ -50,7 +52,7 @@ class RegistrationController extends Controller
         }
 
         $deviceList = createRisPhoneArray($deviceList);
-        $finalReport = [];
+        $deviceDetails = [];
 
         foreach(array_chunk($deviceList, 1000, true) as $chunk)
         {
@@ -59,10 +61,39 @@ class RegistrationController extends Controller
 
             foreach($res as $i)
             {
-                $finalReport[] = $i;
+                $deviceDetails[] = $i;
             }
         }
 
-        return view('registration.show', compact('finalReport'));
+        $finalReport = [];
+
+        foreach($deviceDetails as $device)
+        {
+            if (!filter_var($device['IpAddress'], FILTER_VALIDATE_IP)) {
+
+                $device['Firmware'] = 'Unavailable';
+
+            } else {
+
+                    $guzzle = new Client([
+                        'base_url' => 'http://' . $device['IpAddress'],
+                        'defaults' => [
+                            'headers' => [
+                                'Accept' => 'application/xml',
+                                'Content-Type' => 'application/xml'
+                            ],
+                            'verify' => false,
+                        ]
+                    ]);
+
+                    $device = messagePhone($guzzle, $device, 0);
+                }
+
+            Log::info('Updated $finalReport array', [$device]);
+            $finalReport[] = $device;
+        }
+
+        return view('firmware.show', compact('finalReport'));
+
     }
 }

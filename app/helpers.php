@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @param $userObj
@@ -410,4 +411,55 @@ function getHeaders($data)
 
     return array_keys((array)$data[0]);
 
+}
+
+function messagePhone($guzzle,$deviceData,$count)
+{
+    $count++;
+
+    if ($count > 2) {
+
+        $deviceData['Firmware'] = 'Web Unresponsive';
+        return $deviceData;
+
+    }
+
+    try {
+
+        $stream = \GuzzleHttp\Stream\Stream::factory($guzzle->get('', ['timeout' => 2]));
+
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+
+        if ($e->hasResponse()) {
+
+//            $logger->debug('(Request)', [$e->getRequest()]);
+//            $logger->debug('(Response)', [$e->getResponse()]);
+            dd($e->getResponse());
+            print "$deviceData[DeviceName],$deviceData[IpAddress],Some weird error.  Check the logs.\n";
+            return false;
+
+        } else {
+
+//            $logger->debug('Web Timeout (Request)', [$e->getRequest()]);
+            return messagePhone($guzzle, $deviceData, $count);
+        }
+
+    }
+
+    $page = $stream->getContents();
+    $crawler = new Crawler($page);
+
+    if ($crawler->filter('DIV TABLE TR')->eq(5)->filter('td')->eq(2)->count()) {
+
+        $crawler = $crawler->filter('DIV TABLE TR')->eq(5)->filter('td')->eq(2)->text();
+
+        $deviceData['Firmware'] = $crawler;
+
+    } else {
+
+        $deviceData['Firmware'] = 'Web Parsing Error';
+
+    }
+
+    return $deviceData;
 }
