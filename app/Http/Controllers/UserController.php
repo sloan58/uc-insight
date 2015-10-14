@@ -59,4 +59,29 @@ class UserController extends Controller
         return redirect()->action('UserController@index');
 
     }
+
+    public function store(Request $request)
+    {
+
+        $user = User::firstOrCreate([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+//        $user->name = $request->name;
+//        $user->email = $request->email;
+//        $user->password = checkPassword($user->password,$request->password);
+//        $user->save();
+
+        if($request->input('role_list'))
+        {
+            $user->roles()->sync($request->input('role_list'));
+        }
+
+        Flash::success('User Created!');
+
+        return redirect()->action('UserController@index');
+
+    }
 }
