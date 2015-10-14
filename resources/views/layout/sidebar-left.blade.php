@@ -33,7 +33,7 @@
             <!-- Optionally, you can add icons to the links -->
             {{--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>--}}
             {{--<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>--}}
-            <li class="treeview {{ areActiveRoutes(['sql.index','sql.history']) }}">
+            <li class="treeview {{ areActiveRoutes(['sql.index','sql.store','sql.history']) }}">
               <a href="#"><i class="fa fa-link"></i> <span>SQL Query Tool</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/sql') }}">New Query</a></li>

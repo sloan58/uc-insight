@@ -389,6 +389,7 @@ function executeQuery($axl,$sql)
      */
     $result = $axl->executeSQLQuery($sql);
 
+
     if (isset($result->faultstring)) return $result;
 
     if (!isset($result->return->row)) return '';

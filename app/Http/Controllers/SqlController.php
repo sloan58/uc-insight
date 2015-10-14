@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class SqlController extends Controller
 {
@@ -43,12 +44,7 @@ class SqlController extends Controller
     {
         $sql = $request->input('sqlStatement');
 
-        Sql::firstOrCreate([
-            'sql' => $sql
-        ]);
-
-//        $cluster = Cluster::where('id',$request->cluster)->first();
-        $cluster = Cluster::where('id','12')->first();
+        $cluster = Cluster::where('active', true)->first();
 
         $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
@@ -59,9 +55,19 @@ class SqlController extends Controller
 
         $data = executeQuery($axl,$sql);
 
-        if(!isset($data->faultstring))
+        if(isset($data->faultstring))
         {
+            Flash::error($data->faultstring);
+            return view('sql.index', compact('sql'));
+
+        } else {
+
             $format = getHeaders($data);
+
+            Sql::firstOrCreate([
+                'sql' => $sql
+            ]);
+
         }
 
         return view('sql.index',compact('data','format','sql'));
