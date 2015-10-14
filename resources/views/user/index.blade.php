@@ -22,6 +22,8 @@
                     <tr>
                         <th>Username</th>
                         <th>Email Address</th>
+                        <th>Actions</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,6 +31,21 @@
                         <tr>
                            <td>{{$user->name}}</td>
                            <td>{{$user->email}}</td>
+                            <!-- we will also add show, edit, and delete buttons -->
+                            <td>
+
+                                <div class="col-md-4">
+                                {!! Form::open(['url' => 'user/' . $user->name, 'class' => 'pull-right']) !!}
+                                {!! Form::hidden('_method', 'DELETE') !!}
+                                {!! Form::submit('Delete this User', ['class' => 'btn btn-small btn-danger']) !!}
+                                {!! Form::close() !!}
+
+                                </div>
+                                <td>
+                                    <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+                                    <a class="btn btn-small btn-info" href="{{ URL::to('user/' . $user->name . '/edit') }}">Edit this User</a>
+                                </td>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -46,20 +63,7 @@
                 dom: '<"top">frt<"bottom"lip><"clear">',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
-                "aoColumnDefs": [{
-                    "aTargets": [0]
-                }, {
-                    "aTargets": [0],
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sClass": "center",
-                    "mRender":function(data,type,full){
-                        return '<a href="/user/' + full[0] + '/edit">' + data + '</a>';
-                    }
-                }, {
-                    "aTargets": [2]
-                }, ]
+                ]
             });
 
         })

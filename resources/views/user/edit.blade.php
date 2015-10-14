@@ -10,13 +10,13 @@
 
                         {!! Form::model($user, ['route' => ['user.update', $user->name], 'method' => 'PUT']) !!}
 
-                            {!! Form::open(['route' => 'user.store']) !!}
+                        {!! Form::open(['route' => 'user.store']) !!}
 
                                 @include('user.partials.form')
 
-                            {!! Form::close() !!}
-
                         {!! Form::close() !!}
+
+
 
                     </div>
                 </div>

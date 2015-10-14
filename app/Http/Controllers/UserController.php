@@ -52,7 +52,10 @@ class UserController extends Controller
         $user->password = checkPassword($user->password,$request->password);
         $user->save();
 
-        $user->roles()->sync($request->input('role_list'));
+        if($request->input('role_list'))
+        {
+            $user->roles()->sync($request->input('role_list'));
+        }
 
         Flash::success('User Updated!');
 
@@ -83,5 +86,14 @@ class UserController extends Controller
 
         return redirect()->action('UserController@index');
 
+    }
+
+    public function destroy(Request $request, User $user)
+    {
+        User::destroy($user->id);
+
+        Flash::success('User Deleted!');
+
+        return redirect()->action('UserController@index');
     }
 }

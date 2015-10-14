@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => Carbon::now()
         ]);
 
-        factory(App\User::class, 19)->create();
+//        factory(App\User::class, 19)->create();
         factory(App\Phone::class, 100)->create();
         factory(App\Cluster::class, 5)->create();
 
