@@ -13,6 +13,12 @@ use Log;
 
 class FirmwareController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $clusters = Cluster::lists('name','id');

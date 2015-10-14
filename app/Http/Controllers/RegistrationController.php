@@ -13,6 +13,12 @@ use App\Http\Controllers\Controller;
 
 class RegistrationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $clusters = Cluster::lists('name','id');
@@ -24,7 +30,7 @@ class RegistrationController extends Controller
     {
         set_time_limit(0);
 
-        $cluster = Cluster::where('id',$request->cluster)->first();
+        $cluster = Cluster::where('active',true)->first();
 
         $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',

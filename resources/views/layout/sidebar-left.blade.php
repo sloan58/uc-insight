@@ -40,10 +40,10 @@
                 <li><a href="{{ url('/sql/history') }}">Query History</a></li>
               </ul>
             </li>
-            <li class="treeview {{ areActiveRoutes(['registration.*','service.*']) }}">
+            <li class="treeview {{ areActiveRoutes(['registration.index', 'registration.store','service.index', 'service.store']) }}">
               <a href="#"><i class="fa fa-link"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('/service') }}">CUCM Service Status</a></li>
+                <li><a href="{{ url('/service') }}">Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
               </ul>
             </li>

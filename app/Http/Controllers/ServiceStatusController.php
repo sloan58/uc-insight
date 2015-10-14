@@ -14,6 +14,11 @@ use App\Http\Controllers\Controller;
 class ServiceStatusController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $clusters = Cluster::lists('name','id');
@@ -28,7 +33,7 @@ class ServiceStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $cluster = Cluster::where('id',$request->cluster)->first();
+        $cluster = Cluster::where('active',true)->first();
 
         $axl = new AxlSoap(
             app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
