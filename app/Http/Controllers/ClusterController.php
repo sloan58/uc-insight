@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cluster;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -55,6 +56,14 @@ class ClusterController extends Controller
         ]);
 
         $cluster = new Cluster();
+
+        if($request->active)
+        {
+            DB::table('clusters')->update(['active' => false]);
+            $cluster->active = true;
+
+        }
+
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;
@@ -88,6 +97,13 @@ class ClusterController extends Controller
      */
     public function update(Request $request, Cluster $cluster)
     {
+        if($request->active)
+        {
+            DB::table('clusters')->update(['active' => false]);
+            $cluster->active = true;
+
+        }
+
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;

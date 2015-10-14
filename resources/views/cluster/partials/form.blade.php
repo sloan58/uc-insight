@@ -18,6 +18,11 @@
     {!! Form::label('Password','Password') !!}
     {!! Form::password('password', ['class' => 'form-control', 'placeholder' => '********************']) !!}
 </div>
+<!-- Active Form Input -->
+<div class="form-group">
+    {!! Form::label('Active','Active') !!}
+    {!! Form::checkbox('active', 'active', $active) !!}
+</div>
 <!--  Form Input -->
 <div class="form-group">
     {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}

@@ -22,6 +22,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Cluster Name</th>
+                        <th>Active Cluster</th>
                         <th>Publisher IP</th>
                         <th>Username</th>
                     </tr>
@@ -31,8 +32,9 @@
                         <tr>
                            <td>{{$row->id}}</td>
                            <td>{{$row->name}}</td>
-                           <td>{{$row->ip}}</td>
-                           <td>{{$row->username}}</td>
+                            <td>{{$row->active ? 'Active' : ''}}</td>
+                            <td>{{$row->ip}}</td>
+                            <td>{{$row->username}}</td>
                         </tr>
                     @endforeach
                     </tbody>
