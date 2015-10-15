@@ -33,12 +33,14 @@
         <table id="history-table" class="table table-striped row-border">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>SQL Statement: Click to re-run queries</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($sqls as $sql)
                 <tr>
+                    <td>{{ $sql->id }}</td>
                     <td>{{ $sql->sql }}</td>
                 </tr>
             @endforeach
@@ -56,12 +58,15 @@
     $(function() {
         $("#history-table").DataTable({
             order: [[0, "asc"]],
-            "aoColumnDefs": [
-                {
-                    "aTargets": [ 0 ], // Column to target
-                    "mRender": function ( data, type, full ) {
-                        // 'full' is the row's data object, and 'data' is this column's data
-                        // e.g. 'full is the row object, and 'data' is the phone mac
+            "aoColumnDefs": [{
+                "aTargets": [0],
+                "sClass": "hiddenID"
+            }, {
+                "aTargets": [1],
+                "bSearchable": false,
+                "bSortable": false,
+                "sClass": "center",
+                "mRender":function(data,type,full){
                         return '<a href="/sql/' + full[0] + '">' + data + '</a>';
                     }
                 }

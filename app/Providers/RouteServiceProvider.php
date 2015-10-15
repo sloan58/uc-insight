@@ -43,6 +43,10 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('user', function($name){
             return \App\User::where('name',$name)->first();
         });
+
+        $router->bind('sql', function($id){
+            return \App\Sql::where('id',$id)->first();
+        });
     }
 
     /**
