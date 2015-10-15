@@ -33,18 +33,16 @@
                            <td>{{$user->email}}</td>
                             <!-- we will also add show, edit, and delete buttons -->
                             <td>
-
+                                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+                                <a class="btn btn-small btn-info" href="{{ URL::to('user/' . $user->name . '/edit') }}">Edit this User</a>
+                            </td>
+                            <td>
                                 <div class="col-md-4">
                                 {!! Form::open(['url' => 'user/' . $user->name, 'class' => 'pull-right']) !!}
                                 {!! Form::hidden('_method', 'DELETE') !!}
                                 {!! Form::submit('Delete this User', ['class' => 'btn btn-small btn-danger']) !!}
                                 {!! Form::close() !!}
-
                                 </div>
-                                <td>
-                                    <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                                    <a class="btn btn-small btn-info" href="{{ URL::to('user/' . $user->name . '/edit') }}">Edit this User</a>
-                                </td>
                             </td>
                         </tr>
                     @endforeach
@@ -61,9 +59,6 @@
             $('#cluster-table').dataTable({
                 order: [[0, "asc"]],
                 dom: '<"top">frt<"bottom"lip><"clear">',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
             });
 
         })

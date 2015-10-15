@@ -116,4 +116,12 @@ class ClusterController extends Controller
 
     }
 
+    public function destroy(Cluster $cluster)
+    {
+        Cluster::destroy($cluster->id);
+
+        Flash::success('Cluster Deleted!');
+
+        return redirect()->action('ClusterController@index');
+    }
 }

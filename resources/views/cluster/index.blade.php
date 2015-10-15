@@ -25,16 +25,31 @@
                         <th>Active Cluster</th>
                         <th>Publisher IP</th>
                         <th>Username</th>
+                        <th>Actions</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($clusters as $row)
+                    @foreach($clusters as $cluster)
                         <tr>
-                           <td>{{$row->id}}</td>
-                           <td>{{$row->name}}</td>
-                            <td>{{$row->active ? 'Active' : ''}}</td>
-                            <td>{{$row->ip}}</td>
-                            <td>{{$row->username}}</td>
+                           <td>{{$cluster->id}}</td>
+                           <td>{{$cluster->name}}</td>
+                            <td>{{$cluster->active ? 'Active' : ''}}</td>
+                            <td>{{$cluster->ip}}</td>
+                            <td>{{$cluster->username}}</td>
+                            <!-- we will also add show, edit, and delete buttons -->
+                            <td>
+                                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+                                <a class="btn btn-small btn-info" href="{{ URL::to('cluster/' . $cluster->id . '/edit') }}">Edit this Cluster</a>
+                            </td>
+                            <td>
+                                <div class="col-md-4">
+                                    {!! Form::open(['url' => 'cluster/' . $cluster->id, 'class' => 'pull-right']) !!}
+                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                    {!! Form::submit('Delete this Cluster', ['class' => 'btn btn-small btn-danger']) !!}
+                                    {!! Form::close() !!}
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -49,22 +64,12 @@
         $(function() {
             $('#cluster-table').dataTable({
                 order: [[0, "asc"]],
-                dom: '<"top">Bfrt<"bottom"lip><"clear">',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
+                dom: '<"top">frt<"bottom"lip><"clear">',
                 "aoColumnDefs": [{
                     "aTargets": [0],
                     "sClass": "hiddenID"
-                }, {
-                    "aTargets": [1],
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sClass": "center",
-                    "mRender":function(data,type,full){
-                        return '<a href="/cluster/' + full[0] + '/edit">' + data + '</a>';
-                    }
-                }, {
+                },
+                {
                     "aTargets": [2]
                 }, ]
             });
