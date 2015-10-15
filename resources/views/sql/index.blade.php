@@ -6,20 +6,21 @@
 
 @section('sub-header')
 <!-- Content Header (Page header) -->
-    <section class="content-header">
+    {{--<section class="content-header">--}}
       {{--<h1>--}}
         {{--Page Header--}}
         {{--<small>Optional description</small>--}}
       {{--</h1>--}}
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">SQL Query</li>
-      </ol>
-    </section>
+      {{--<ol class="breadcrumb">--}}
+        {{--<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>--}}
+        {{--<li class="active">SQL Query</li>--}}
+      {{--</ol>--}}
+    {{--</section>--}}
 @stop
 
 @section('content')
-<div class="container-fluid">
+
+    <div class="container-fluid">
     <div class="row sql-box">
         <div class="col-md-8 col-md-offset-3">
             <form method="POST" action="/sql"
@@ -28,11 +29,11 @@
                   <div class="form-group">
                     <div class="col-sm-8">
                       <textarea type="textarea" id="sqlStatement" name="sqlStatement" placeholder="Enter SQL Statement Here..."
-                             class="form-control">{{{ $sql or '' }}}</textarea>
+                             class="form-control">{{ $sql or '' }}</textarea>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            Submit Query
+                        </button>
                     </div>
-                      <button type="submit" class="btn btn-primary">
-                        Submit
-                      </button>
                   </div>
             </form>
          </div>
@@ -86,7 +87,8 @@
          lineWrapping: true
        });
 
-       myCodeMirror.setSize(425, 100);
+//       myCodeMirror.setSize(425, 100);
+       myCodeMirror.setSize("100%", 300);
 
 </script>
 @stop
