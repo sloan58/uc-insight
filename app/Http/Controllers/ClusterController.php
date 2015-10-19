@@ -75,6 +75,7 @@ class ClusterController extends Controller
 
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
+        $cluster->version = $request->version;
         $cluster->username = $request->username;
         $cluster->password = $request->password;
 
