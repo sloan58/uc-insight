@@ -45,7 +45,7 @@ class SqlController extends Controller
         $cluster = Cluster::where('active', true)->first();
 
         $axl = new AxlSoap(
-            app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
+            storage_path() . '/app/axl/' . $cluster->version . '/AXLAPI.wsdl',
             'https://' . $cluster->ip . ':8443/axl/',
             $cluster->username,
             $cluster->password

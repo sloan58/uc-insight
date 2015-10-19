@@ -12,7 +12,10 @@
 */
 
 //Dashboard
-Route::get('/', 'DashboardController@index');
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'DashboardController@index'
+]);
 
 //SQL
 Route::get('sql/history', [

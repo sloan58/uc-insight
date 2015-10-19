@@ -16,6 +16,7 @@ class CreateClustersTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('ip')->unique();
+            $table->string('version');
             $table->string('username');
             $table->string('password');
             $table->boolean('active');

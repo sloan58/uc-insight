@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
 
 class ClusterController extends Controller
@@ -38,7 +39,15 @@ class ClusterController extends Controller
      */
     public function create()
     {
-        return view('cluster.create');
+        $directories = Storage::directories('axl/');
+        $versions= [];
+        foreach($directories as $directory)
+        {
+            preg_match('/\/(.*)/',$directory,$matches);
+            $versions[$matches[1]] = $matches[1];
+        }
+
+        return view('cluster.create', compact('versions'));
     }
 
     /**
@@ -83,9 +92,16 @@ class ClusterController extends Controller
      * @param $cluster
      * @return Response
      */
-    public function edit($cluster)
+    public function edit(Cluster $cluster)
     {
-        return view('cluster.edit', compact('cluster'));
+        $directories = Storage::directories('axl/');
+        $versions= [];
+        foreach($directories as $directory)
+        {
+            preg_match('/\/(.*)/',$directory,$matches);
+            $versions[$matches[1]] = $matches[1];
+        }
+        return view('cluster.edit', compact('cluster','versions'));
     }
 
     /**
@@ -107,6 +123,7 @@ class ClusterController extends Controller
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;
+        $cluster->version = $request->version;
         $cluster->password = checkPassword($cluster->password,$request->password);
         $cluster->save();
 

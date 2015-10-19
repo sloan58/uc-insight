@@ -18,6 +18,11 @@
     {!! Form::label('Password','Password') !!}
     {!! Form::password('password', ['class' => 'form-control', 'placeholder' => '********************']) !!}
 </div>
+<!-- Version Form Input -->
+<div class="form-group">
+    {!! Form::label('Version','Version') !!}
+    {!! Form::select('version', $versions , $version) !!}
+</div>
 <!-- Active Form Input -->
 <div class="form-group">
     {!! Form::label('Active','Active') !!}

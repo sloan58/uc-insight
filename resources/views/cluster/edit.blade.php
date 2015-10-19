@@ -12,7 +12,7 @@
 
                             {!! Form::open(['route' => 'cluster.store']) !!}
 
-                                @include('cluster.partials.form', ['active' => $cluster->active])
+                                @include('cluster.partials.form', ['active' => $cluster->active, 'version' => $cluster->version])
 
                             {!! Form::close() !!}
 
