@@ -40,7 +40,7 @@ class RegistrationController extends Controller
         );
 
         $sxml = new RisSoap(
-            app_path() . '/CiscoAPI/sxml/schema/RISAPI.wsdl',
+//            app_path() . '/CiscoAPI/sxml/schema/RISAPI.wsdl',
             'https://' . $cluster->ip . ':8443/realtimeservice/services/RisPort',
             $cluster->username,
             $cluster->password
