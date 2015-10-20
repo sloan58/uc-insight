@@ -1,6 +1,8 @@
 ## UC Insight
 
-UC Insight is a collection of utilities that can be used with Cisco Unified Communications Manager.  Read below for a current list of features and components.
+UC Insight is a collection of utilities that can be used with Cisco Unified Communications Manager.  It was built using Laravel 5.1.  If you'd like more information on integrating with Cisco CUCM API's using AXL and Laravel, please check out the Karma-Tek Blog @ http://karma-tek.com/blog.
+
+Please read below for a current list of features and components.
 
 ## Features Overview
 - User Management System
