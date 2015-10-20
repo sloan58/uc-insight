@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = checkPassword($user->password,$request->password);
+        $user->password = bcrypt(checkPassword($user->password,$request->password));
         $user->save();
 
         if($request->input('role_list'))
@@ -69,13 +69,9 @@ class UserController extends Controller
         $user = User::firstOrCreate([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
         ]);
 
-//        $user->name = $request->name;
-//        $user->email = $request->email;
-//        $user->password = checkPassword($user->password,$request->password);
-//        $user->save();
 
         if($request->input('role_list'))
         {

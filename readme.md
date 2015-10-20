@@ -1,28 +1,47 @@
-## Laravel PHP Framework
+## UC Insight
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+UC Insight is a collection of utilities that can be used with Cisco Unified Communications Manager.  Read below for a current list of features and components.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Features Overview
+- User Management System
+- Multi Cluster Support
+- AXL Schema Versions 7.0 through 10.5
+ 
+## SQL Query Tool
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+The SQL Query Tool allows you to make queries to the CUCM database and export the results in an easy to use format such as csv or pfd.  The query history will retain any succesful queries so you can simply click on the stored query and it will be re-run.
 
-## Official Documentation
+## Service Status
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+The service status tool will provide a report of all servers in a CUCM cluster and the status of each service, like Cisco Call Manager or TFTP.  This report is useful to export as a CSV and compare when doing upgrades or new implementations to ensure all services that should be started are started and services that should not be started, are not.
 
-## Contributing
+## Device Registration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+The device registration tool will query the CUCM 'device' table for all devices and then obtain the registration status of each device.  The results can be saved as csv, pdf, etc.  The 'device' table contains more than just phones so you'll get reports on things like MOH servers and Transcoders.  This tool is useful to compare device registration status before and after an upgrade or cluster reboot.  Currently, you'll need to use diff or another tool of your choice to compare the before and after.  Eventually I'd like to add the feature to do this comparison via the program.
 
-## Security Vulnerabilities
+### Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- Clone this repository to your computer.
+- Install Composer Dependencies
+~~~
+composer install
+~~~
+- Install npm Dependencies
+~~~
+npm install
+~~~
+- Install Bower Dependencies
+~~~
+bower install
+~~~
+- Configure your environment variables and database settings -  .env.example is provided as a template.
+- Migrate the database
+~~~
+php artisan migrate
+~~~
+- Seed the database
+~~~
+php artisan db:seed
+~~~
 
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-# uc-insight
+There will be a user created with an email of 'admin@admin.com' and password 'admin' which you can use to login for the first time.  After that, you can create your own local accounts and configure your CUCM cluster settings under Admin Settings->Clusters.

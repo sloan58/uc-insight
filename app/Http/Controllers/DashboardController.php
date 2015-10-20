@@ -20,8 +20,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-        Flash::success('Welcome Back, ' . auth()->user()->name .'!');
-
         return view('dashboard.index');
     }
 }
