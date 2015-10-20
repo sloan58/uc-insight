@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by Joe Porcheddu (Cisco Systems, Inc.) -->
+<xsd:schema targetNamespace="http://www.cisco.com/AXL/API/7.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:axlapi="http://www.cisco.com/AXL/API/7.1" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.cisco.com/AXL/7.1" schemaLocation="axl.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[
+
+Version 1.00
+
+$Revision: 4 $
+$Author: Claycle $
+$Date: 1/17/01 4:36p $
+
+Copyright (c) 2001, 2007-2008 Cisco Systems, Inc.
+	
+**********************
+* CISCO CONFIDENTIAL *
+**********************
+
+This file describes the abstract and base types of AXL messages.  Do not add new "final" message types to this file. Add them to axlmessages.xsd.
+
+]]></xsd:documentation>
+	</xsd:annotation>
+	<!-- These types are not used by anything, so they are commented out
+	<xsd:element name="axl" type="axlapi:Envelope">
+		<xsd:annotation>
+			<xsd:documentation>The abstract AXL envelope.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="Envelope" abstract="true" block="restriction">
+		<xsd:annotation>
+			<xsd:documentation>Abstract</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="asynchronous" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If defined, the client wishes the response returned asynchrously.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="asynchResponsePort" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If defined and asynchronous is true, then return the response to this port (otherwise, use the system default).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="securityInfo" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Carries the security information of the envelope.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="userid" type="xsd:string"/>
+						<xsd:element name="password" type="xsd:string"/>
+						<xsd:element name="publicKey" type="xsd:string" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="sequence" type="xsd:unsignedLong" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="Response" abstract="false">
+		<xsd:complexContent>
+			<xsd:extension base="axlapi:Envelope">
+				<xsd:choice>
+					<xsd:element name="response" type="axlapi:APIResponse">
+						<xsd:annotation>
+							<xsd:documentation>Completely abstracted, specific response payloads must be defined.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="error" type="axlapi:Error"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Request" abstract="false">
+		<xsd:complexContent>
+			<xsd:extension base="axlapi:Envelope">
+				<xsd:all>
+					<xsd:element name="request" type="axlapi:APIRequest">
+						<xsd:annotation>
+							<xsd:documentation>Completely abstracted, the request payload must be defined.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:all>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	-->
+	<xsd:complexType name="APIRequest" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>All requests must extend abstractRequest.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="sequence" type="xsd:unsignedLong" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="APIResponse" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>All responses must extend abstractResponse.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="sequence" type="xsd:unsignedLong" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="Error">
+		<xsd:sequence>
+			<xsd:element name="code" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>The error code.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="message" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Optional text message sent with error code.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="request" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Optional reference to original request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="url" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Optional URL to link for more information.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
