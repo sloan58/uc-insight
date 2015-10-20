@@ -1,6 +1,8 @@
 ## UC Insight
 
-UC Insight is a collection of utilities that can be used with Cisco Unified Communications Manager.  Read below for a current list of features and components.
+UC Insight is a collection of utilities that can be used with Cisco Unified Communications Manager.  It was built using Laravel 5.1.  If you'd like more information on integrating with Cisco CUCM API's using AXL and Laravel, please check out the Karma-Tek Blog @ http://karma-tek.com/blog.
+
+While this application is a work in progress, it does have some useful features out of the box at this time.  Please read below for a current list of features and components.
 
 ## Features Overview
 - User Management System
@@ -17,7 +19,7 @@ The service status tool will provide a report of all servers in a CUCM cluster a
 
 ## Device Registration
 
-The device registration tool will query the CUCM 'device' table for all devices and then obtain the registration status of each device.  The results can be saved as csv, pdf, etc.  The 'device' table contains more than just phones so you'll get reports on things like MOH servers and Transcoders.  This tool is useful to compare device registration status before and after an upgrade or cluster reboot.  Currently, you'll need to use diff or another tool of your choice to compare the before and after.  Eventually I'd like to add the feature to do this comparison via the program.
+The device registration tool will query the CUCM 'device' table for all devices and then obtain the registration status of each device.  The results can be saved as csv, pdf, etc.  The 'device' table contains more than just phones so you'll get reports on things like MOH servers and Transcoders.  This tool is useful to compare device registration status before and after an upgrade or cluster reboot.
 
 ### Installation
 
@@ -34,7 +36,7 @@ npm install
 ~~~
 bower install
 ~~~
-- Configure your environment variables and database settings -  .env.example is provided as a template.
+- Configure your environment variables and database settings.  A template file named .env.example has been included.  Copy this file to .env and modify the settings as needed.
 - Migrate the database
 ~~~
 php artisan migrate
