@@ -55,7 +55,13 @@ class SqlController extends Controller
 
         if(isset($data->faultstring))
         {
-            Flash::error($data->faultstring);
+            if($data->faultstring == '')
+            {
+                Flash::error('Server Error.  Check your WSDL Version....');
+            } else {
+                Flash::error($data->faultstring);
+            }
+
             return view('sql.index', compact('sql'));
 
         } else {
@@ -79,7 +85,7 @@ class SqlController extends Controller
         $cluster = Cluster::where('active', true)->first();
 
         $axl = new AxlSoap(
-            app_path() . '/CiscoAPI/axl/schema/8.5/AXLAPI.wsdl',
+            storage_path() . '/app/axl/' . $cluster->version . '/AXLAPI.wsdl',
             'https://' . $cluster->ip . ':8443/axl/',
             $cluster->username,
             $cluster->password
