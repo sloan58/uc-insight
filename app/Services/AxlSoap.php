@@ -21,16 +21,23 @@ class AxlSoap {
      * @param $location
      * @param $user
      * @param $pass
+     * @param bool $verifyPeer
      */
-    public function __construct($wsdlPath,$location,$user,$pass)
+    public function __construct($wsdlPath,$location,$user,$pass,$verifyPeer = false)
     {
+        if($verifyPeer)
+        {
+            $verifyPeer = "stream_context_create(array('ssl'=>array('verify_peer'=>false, 'verify_peer_name'=>false)))";
+        }
+
         $this->client = new SoapClient($wsdlPath,
             [
                 'trace'=> true,
                 'exceptions'=> true,
                 'location' => $location,
                 'login' => $user,
-                'password' => $pass
+                'password' => $pass,
+                'stream_context' => $verifyPeer
             ]
         );
 

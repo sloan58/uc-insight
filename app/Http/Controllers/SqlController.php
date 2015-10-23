@@ -36,6 +36,7 @@ class SqlController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -48,9 +49,11 @@ class SqlController extends Controller
             storage_path() . '/app/axl/' . $cluster->version . '/AXLAPI.wsdl',
             'https://' . $cluster->ip . ':8443/axl/',
             $cluster->username,
-            $cluster->password
+            $cluster->password,
+            $cluster->verify_peer
         );
 
+        dd($axl);
         $data = executeQuery($axl,$sql);
 
         if(isset($data->faultstring))

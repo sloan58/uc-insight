@@ -23,6 +23,11 @@
     {!! Form::label('Version','Version') !!}
     {!! Form::select('version', $versions , $version) !!}
 </div>
+<!-- Verify Peer Form Input -->
+<div class="form-group">
+    {!! Form::label('Verify Peer','Verify Peer') !!}
+    {!! Form::checkbox('verify_peer', 'verify_peer') !!}
+</div>
 <!-- Active Form Input -->
 <div class="form-group">
     {!! Form::label('Active','Active') !!}
