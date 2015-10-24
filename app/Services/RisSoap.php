@@ -1,10 +1,10 @@
 <?php
 namespace App\Services;
 
-use App\Cluster;
-use Illuminate\Support\Facades\Artisan;
-use SoapClient;
 use SoapFault;
+use SoapClient;
+use App\Cluster;
+use App\Exceptions\SoapException;
 
 class RisSoap {
 
@@ -13,12 +13,9 @@ class RisSoap {
      */
     protected $client;
 
-    /**
-     * @param Cluster $cluster
-     */
-    public function __construct(Cluster $cluster)
+    public function __construct()
     {
-        $this->cluster = $cluster;
+        $this->cluster = Cluster::where('active', true)->first();
 
         $this->client = new SoapClient(storage_path() . '/app/sxml/RISAPI.wsdl',
             [
@@ -74,7 +71,8 @@ class RisSoap {
 
     /**
      * @param $phoneArray
-     * @return bool|\Exception|\SoapFault
+     * @return bool|\Exception|SoapFault
+     * @throws SoapException
      */
     public function getDeviceIp($phoneArray)
     {
@@ -89,33 +87,22 @@ class RisSoap {
                 'SelectItems'=>
                     $phoneArray
             ]);
-        } catch (SoapFault $E) {
+        } catch (SoapFault $e) {
 
-            // Loop if we get a RISPort error for exceeding maximum calls in 1 minute
-            if (preg_match('/^AxisFault: Exceeded allowed rate for Reatime information/',$E->faultstring))
+            /*
+             * Loop if RISPort error for exceeding maximum calls in 1 minute
+             * The typo in the error message is not mine, it is courtesy of Cisco :-(
+             */
+            if (preg_match('/^AxisFault: Exceeded allowed rate for Reatime information/',$e->faultstring))
             {
                 sleep(30);
                 $this->getDeviceIp($phoneArray);
             }
-            return $E;
+
+            // It's a real error, let's bail!
+            throw new SoapException($e->faultstring);
         }
-
-
-        /*
-         * No Errors
-         * Process Results
-         */
 
         return $response["SelectCmDeviceResult"];
-        $SelectCmDeviceResult = $response["SelectCmDeviceResult"];
-
-        /*
-         * Return results if they exist
-         * Or return false
-         */
-        if ($SelectCmDeviceResult->CmNodes) {
-            return $SelectCmDeviceResult->CmNodes;
-        }
-        return false;
     }
 }

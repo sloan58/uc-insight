@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Cluster;
-use App\Services\AxlSoap;
-use App\Services\PreparePhoneList;
-use App\Services\RisSoap;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Laracasts\Flash\Flash;
+use App\Services\RisSoap;
+use App\Services\PreparePhoneList;
 
+/**
+ * Class RegistrationController
+ * @package App\Http\Controllers
+ */
 class RegistrationController extends Controller
 {
 
@@ -34,54 +33,37 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\View\View
+     * @internal param Request $request
      */
-    public function store(Request $request)
+    public function store()
     {
         set_time_limit(0);
 
-        $cluster = Cluster::where('active',true)->first();
-        $axl = new AxlSoap($cluster);
-        $sxml = new RisSoap($cluster);
+        $sxml = new RisSoap();
+        $data = executeQuery('SELECT name FROM device');
 
-        $data = executeQuery($axl,'SELECT name FROM device');
+        $deviceList = [];
 
-        if(isset($data->faultstring))
+        foreach($data as $i)
         {
-            if($data->faultstring == '')
-            {
-                Flash::error('Server Error.  Check your WSDL Version....');
-            } else {
-                Flash::error($data->faultstring);
-            }
-
-            return view('registration.index');
-
-        } else {
-
-            $deviceList = [];
-
-            foreach($data as $i)
-            {
-                $deviceList[] = $i->name;
-            }
-
-            $deviceList = createRisPhoneArray($deviceList);
-            $finalReport = [];
-
-            foreach(array_chunk($deviceList, 1000, true) as $chunk)
-            {
-                $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
-                $res = processRisResults($SelectCmDeviceResult,$chunk);
-
-                foreach($res as $i)
-                {
-                    $finalReport[] = $i;
-                }
-            }
-
-            return view('registration.show', compact('finalReport'));
+            $deviceList[] = $i->name;
         }
+
+        $deviceList = createRisPhoneArray($deviceList);
+        $finalReport = [];
+
+        foreach(array_chunk($deviceList, 1000, true) as $chunk)
+        {
+            $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
+            $res = processRisResults($SelectCmDeviceResult,$chunk);
+
+            foreach($res as $i)
+            {
+                $finalReport[] = $i;
+            }
+        }
+
+        return view('registration.show', compact('finalReport'));
     }
 }

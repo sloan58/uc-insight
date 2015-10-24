@@ -4,20 +4,6 @@
     UC-Insight - SQL History
 @stop
 
-@section('sub-header')
-<!-- Content Header (Page header) -->
-    <section class="content-header">
-      {{--<h1>--}}
-        {{--Page Header--}}
-        {{--<small>Optional description</small>--}}
-      {{--</h1>--}}
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">SQL History</li>
-      </ol>
-    </section>
-@stop
-
 @section('content')
 <div class="container-fluid">
     <div class="row page-tctle-row">
@@ -27,7 +13,7 @@
     </div>
 </div>
 
-@if(isset($sqls))
+@if(isset($sql))
 <div class="row">
     <div class="col-sm-12">
         <table id="history-table" class="table table-striped row-border">
@@ -38,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($sqls as $sql)
+            @foreach($sql as $sql)
                 <tr>
                     <td>{{ $sql->id }}</td>
                     <td>{{ $sql->sql }}</td>

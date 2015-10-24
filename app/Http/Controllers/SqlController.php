@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Cluster;
-use App\Services\AxlSoap;
-use App\Services\SqlSelect;
 use App\Sql;
-use Illuminate\Http\Request;
-
+use App\Cluster;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Laracasts\Flash\Flash;
+use App\Services\SqlSelect;
+use Illuminate\Http\Request;
 
 class SqlController extends Controller
 {
@@ -43,31 +39,12 @@ class SqlController extends Controller
     {
         $sql = $request->input('sqlStatement');
 
-        $axl = new AxlSoap(
-            Cluster::where('active', true)->first()
-        );
-        $data = executeQuery($axl,$sql);
+        $data = executeQuery($sql);
+        $format = getHeaders($data);
 
-        if(isset($data->faultstring))
-        {
-            if($data->faultstring == '')
-            {
-                Flash::error('Server Error.  Check your WSDL Version....');
-            } else {
-                Flash::error($data->faultstring);
-            }
-
-            return view('sql.index', compact('sql'));
-
-        } else {
-
-            $format = getHeaders($data);
-
-            Sql::firstOrCreate([
-                'sql' => $sql
-            ]);
-
-        }
+        Sql::firstOrCreate([
+            'sql' => $sql
+        ]);
 
         return view('sql.index',compact('data','format','sql'));
     }
@@ -77,31 +54,17 @@ class SqlController extends Controller
 
         $sql = $sql->sql;
 
-        $axl = new AxlSoap(
-            Cluster::where('active', true)->first()
-        );
-
-        $data = executeQuery($axl,$sql);
-
-        if(isset($data->faultstring))
-        {
-            Flash::error($data->faultstring);
-            return view('sql.index', compact('sql'));
-
-        } else {
-
-            $format = getHeaders($data);
-
-        }
+        $data = executeQuery($sql);
+        $format = getHeaders($data);
 
         return view('sql.index',compact('data','format','sql'));
     }
 
     public function history()
     {
-        $sqls = Sql::all();
+        $sql = Sql::all();
 
-        return view('sql.history', compact('sqls'));
+        return view('sql.history', compact('sql'));
 
     }
 }

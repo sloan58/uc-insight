@@ -1,5 +1,7 @@
 <?php
-use Laracasts\Flash\Flash;
+
+use App\Services\AxlSoap;
+use App\Exceptions\SoapException;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -381,12 +383,10 @@ function checkPassword($currentPassword,$toCheckPassword)
     }
 }
 
-function executeQuery($axl,$sql)
+function executeQuery($sql)
 {
-    /*
-     * Send Query to CUCM and
-     * return the results.
-     */
+    $axl = new AxlSoap();
+
     $result = $axl->executeSQLQuery($sql);
     return checkQueryResult($result);
 
@@ -395,14 +395,21 @@ function executeQuery($axl,$sql)
 function checkQueryResult($result)
 {
     switch($result) {
+        case isset($result->faultcode) && $result->faultcode == 'HTTP':
+            throw new SoapException('Server Error.  Please check your WSDL version is correct for the active cluster.');
+            break;
+
         case isset($result->faultstring):
-            return $result;
+            throw new SoapException($result->faultstring);
+            break;
 
         case !isset($result->return->row):
-            return '';
+            throw new SoapException('No Results Found');
+            break;
 
         case is_array($result->return->row):
             return $result->return->row;
+            break;
 
         default:
             $return = [];
@@ -413,8 +420,14 @@ function checkQueryResult($result)
 
 function getHeaders($data)
 {
+    if(isset($data[0]))
+    {
+        return array_keys((array)$data[0]);
 
-    return array_keys((array)$data[0]);
+    } else {
+
+        return false;
+    }
 
 }
 

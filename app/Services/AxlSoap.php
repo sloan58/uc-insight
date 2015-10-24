@@ -1,10 +1,9 @@
 <?php
 namespace App\Services;
 
-use App\Cluster;
-use Illuminate\Support\Facades\Artisan;
-use SoapClient;
 use SoapFault;
+use SoapClient;
+use App\Cluster;
 
 /**
  * Class AxlSoap
@@ -19,11 +18,11 @@ class AxlSoap {
 
 
     /**
-     * @param Cluster $cluster
+     *
      */
-    public function __construct(Cluster $cluster)
+    public function __construct()
     {
-        $this->cluster = $cluster;
+        $this->cluster = Cluster::where('active', true)->first();
 
         $this->client = new SoapClient(storage_path() . '/app/axl/' . $this->cluster->version . '/AXLAPI.wsdl',
             [
@@ -144,7 +143,6 @@ class AxlSoap {
                 'sql' => $sql,
             ]);
         } catch(SoapFault $E) {
-
             return $E;
         }
     }

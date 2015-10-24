@@ -1,10 +1,10 @@
 <?php
 namespace App\Services;
 
-use App\Cluster;
-use Illuminate\Support\Facades\Artisan;
-use SoapClient;
 use SoapFault;
+use SoapClient;
+use App\Cluster;
+use App\Exceptions\SoapException;
 
 class ControlCenterSoap {
 
@@ -14,11 +14,11 @@ class ControlCenterSoap {
     protected $client;
 
     /**
-     * @param Cluster $cluster
+     *
      */
-    public function __construct(Cluster $cluster)
+    public function __construct()
     {
-        $this->cluster = $cluster;
+        $this->cluster = Cluster::where('active', true)->first();
 
         $this->client = new SoapClient('https://' . $this->cluster->ip . '/controlcenterservice2/services/ControlCenterServices?wsdl',
             [
@@ -74,6 +74,7 @@ class ControlCenterSoap {
 
     /**
      * @return mixed
+     * @throws SoapException
      */
     public function getServiceStatus()
     {
@@ -85,7 +86,7 @@ class ControlCenterSoap {
 
         } catch (SoapFault $e) {
 
-            var_dump($e); die;
+            throw new SoapException($e->faultstring);
 
         }
 

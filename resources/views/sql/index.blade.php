@@ -4,20 +4,6 @@
     UC-Insight - SQL Query Tool
 @stop
 
-@section('sub-header')
-<!-- Content Header (Page header) -->
-    {{--<section class="content-header">--}}
-      {{--<h1>--}}
-        {{--Page Header--}}
-        {{--<small>Optional description</small>--}}
-      {{--</h1>--}}
-      {{--<ol class="breadcrumb">--}}
-        {{--<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>--}}
-        {{--<li class="active">SQL Query</li>--}}
-      {{--</ol>--}}
-    {{--</section>--}}
-@stop
-
 @section('content')
 
     <div class="container-fluid">
@@ -40,7 +26,7 @@
     </div>
 </div>
 
-@if(isset($data))
+@if(isset($data) && $data != '')
 <div class="row">
     <div class="col-sm-12">
         <table id="sql-table" class="table table-striped row-border">

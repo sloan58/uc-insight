@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Cluster;
 use DB;
-use Illuminate\Http\Request;
-
+use App\Cluster;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ClusterController extends Controller
 {
@@ -53,6 +50,7 @@ class ClusterController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -109,6 +107,7 @@ class ClusterController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
+     * @param Cluster $cluster
      * @return Response
      * @internal param int $id
      */
