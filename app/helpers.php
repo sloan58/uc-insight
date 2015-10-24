@@ -1,4 +1,5 @@
 <?php
+use Laracasts\Flash\Flash;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -382,28 +383,31 @@ function checkPassword($currentPassword,$toCheckPassword)
 
 function executeQuery($axl,$sql)
 {
-
     /*
      * Send Query to CUCM and
      * return the results.
      */
     $result = $axl->executeSQLQuery($sql);
+    return checkQueryResult($result);
 
+}
 
-    if (isset($result->faultstring)) return $result;
+function checkQueryResult($result)
+{
+    switch($result) {
+        case isset($result->faultstring):
+            return $result;
 
-    if (!isset($result->return->row)) return '';
+        case !isset($result->return->row):
+            return '';
 
-    if (is_array($result->return->row)) {
+        case is_array($result->return->row):
+            return $result->return->row;
 
-        return $result->return->row;
-
-    } else {
-
-        $return = [];
-        $return[0] = $result->return->row;
-        return $return;
-
+        default:
+            $return = [];
+            $return[0] = $result->return->row;
+            return $return;
     }
 }
 

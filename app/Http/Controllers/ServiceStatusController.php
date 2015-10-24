@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class ServiceStatusController extends Controller
 {
@@ -29,33 +30,37 @@ class ServiceStatusController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
     {
         $cluster = Cluster::where('active',true)->first();
+        $axl = new AxlSoap($cluster);
 
-        $axl = new AxlSoap(
-            storage_path() . '/app/axl/8.5/AXLAPI.wsdl',
-            'https://' . $cluster->ip . ':8443/axl/',
-            $cluster->username,
-            $cluster->password
-        );
+        $data = executeQuery($axl,'SELECT name FROM processnode WHERE tkprocessnoderole = 1 AND name != "EnterpriseWideData"');
 
-        $res = $axl->executeSQLQuery('SELECT name FROM processnode WHERE tkprocessnoderole = 1 AND name != "EnterpriseWideData"');
-
-        $clusterNodes = $res->return->row;
-
-        $clusterStatus = [];
-
-        foreach($clusterNodes as $node)
+        if(isset($data->faultstring))
         {
-            $ris = new ControlCenterSoap($node->name, $cluster->username, $cluster->password);
-            $res = $ris->getServiceStatus();
-            $clusterStatus[$node->name] = $res;
+            if($data->faultstring == '')
+            {
+                Flash::error('Server Error.  Check your WSDL Version....');
+            } else {
+                Flash::error($data->faultstring);
+            }
+
+            return view('registration.index');
+
+        } else {
+
+            $clusterStatus = [];
+            foreach($data as $node)
+            {
+                $ris = new ControlCenterSoap($cluster);
+                $clusterStatus[$node->name] = $ris->getServiceStatus();
+            }
+
+            return view('service.show', compact('clusterStatus'));
         }
-
-        return view('service.show', compact('clusterStatus'));
     }
-
 }

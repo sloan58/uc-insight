@@ -10,15 +10,22 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class RegistrationController extends Controller
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $clusters = Cluster::lists('name','id');
@@ -26,50 +33,55 @@ class RegistrationController extends Controller
         return view('registration.index', compact('clusters'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function store(Request $request)
     {
         set_time_limit(0);
 
         $cluster = Cluster::where('active',true)->first();
+        $axl = new AxlSoap($cluster);
+        $sxml = new RisSoap($cluster);
 
-        $axl = new AxlSoap(
-            storage_path() . '/app/axl/8.5/AXLAPI.wsdl',
-            'https://' . $cluster->ip . ':8443/axl/',
-            $cluster->username,
-            $cluster->password
-        );
+        $data = executeQuery($axl,'SELECT name FROM device');
 
-        $sxml = new RisSoap(
-//            app_path() . '/CiscoAPI/sxml/schema/RISAPI.wsdl',
-            '',
-            'https://' . $cluster->ip . ':8443/realtimeservice/services/RisPort',
-            $cluster->username,
-            $cluster->password
-        );
-
-        $res = $axl->executeSQLQuery('SELECT name FROM device');
-
-        $deviceList = [];
-
-        foreach($res->return->row as $i)
+        if(isset($data->faultstring))
         {
-            $deviceList[] = $i->name;
-        }
-
-        $deviceList = createRisPhoneArray($deviceList);
-        $finalReport = [];
-
-        foreach(array_chunk($deviceList, 1000, true) as $chunk)
-        {
-            $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
-            $res = processRisResults($SelectCmDeviceResult,$chunk);
-
-            foreach($res as $i)
+            if($data->faultstring == '')
             {
-                $finalReport[] = $i;
+                Flash::error('Server Error.  Check your WSDL Version....');
+            } else {
+                Flash::error($data->faultstring);
             }
-        }
 
-        return view('registration.show', compact('finalReport'));
+            return view('registration.index');
+
+        } else {
+
+            $deviceList = [];
+
+            foreach($data as $i)
+            {
+                $deviceList[] = $i->name;
+            }
+
+            $deviceList = createRisPhoneArray($deviceList);
+            $finalReport = [];
+
+            foreach(array_chunk($deviceList, 1000, true) as $chunk)
+            {
+                $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
+                $res = processRisResults($SelectCmDeviceResult,$chunk);
+
+                foreach($res as $i)
+                {
+                    $finalReport[] = $i;
+                }
+            }
+
+            return view('registration.show', compact('finalReport'));
+        }
     }
 }

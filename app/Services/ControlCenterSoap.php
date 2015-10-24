@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Cluster;
 use Illuminate\Support\Facades\Artisan;
 use SoapClient;
 use SoapFault;
@@ -12,18 +13,23 @@ class ControlCenterSoap {
      */
     protected $client;
 
-    public function __construct($node,$user,$pass)
+    /**
+     * @param Cluster $cluster
+     */
+    public function __construct(Cluster $cluster)
     {
-        $this->client = new SoapClient('https://' . $node . '/controlcenterservice2/services/ControlCenterServices?wsdl',
+        $this->cluster = $cluster;
+
+        $this->client = new SoapClient('https://' . $this->cluster->ip . '/controlcenterservice2/services/ControlCenterServices?wsdl',
             [
-                'trace'=> true,
-                'exceptions'=> true,
-                'location'=> 'https://' . $node . ':8443/controlcenterservice2/services/ControlCenterServices',
-                'login'=> $user,
-                'password'=> $pass,
+                'trace' => true,
+                'exceptions' => true,
+                'location' => 'https://' . $this->cluster->ip . ':8443/controlcenterservice2/services/ControlCenterServices',
+                'login' => $this->cluster->username,
+                'password' => $this->cluster->password,
+                'stream_context' => $this->cluster->verify_peer ?: stream_context_create(array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false)))
             ]
         );
-
     }
 
     /**

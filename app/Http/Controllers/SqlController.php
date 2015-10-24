@@ -43,17 +43,9 @@ class SqlController extends Controller
     {
         $sql = $request->input('sqlStatement');
 
-        $cluster = Cluster::where('active', true)->first();
-
         $axl = new AxlSoap(
-            storage_path() . '/app/axl/' . $cluster->version . '/AXLAPI.wsdl',
-            'https://' . $cluster->ip . ':8443/axl/',
-            $cluster->username,
-            $cluster->password,
-            $cluster->verify_peer
+            Cluster::where('active', true)->first()
         );
-
-        dd($axl);
         $data = executeQuery($axl,$sql);
 
         if(isset($data->faultstring))
@@ -85,13 +77,8 @@ class SqlController extends Controller
 
         $sql = $sql->sql;
 
-        $cluster = Cluster::where('active', true)->first();
-
         $axl = new AxlSoap(
-            storage_path() . '/app/axl/' . $cluster->version . '/AXLAPI.wsdl',
-            'https://' . $cluster->ip . ':8443/axl/',
-            $cluster->username,
-            $cluster->password
+            Cluster::where('active', true)->first()
         );
 
         $data = executeQuery($axl,$sql);
