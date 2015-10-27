@@ -146,12 +146,14 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * UC-Insight Dependencices
+         * UC-Insight Dependencies
          */
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
 
 
         /*

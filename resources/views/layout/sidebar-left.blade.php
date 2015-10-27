@@ -37,11 +37,20 @@
                 <li><a href="{{ url('/sql/history') }}">Query History</a></li>
               </ul>
             </li>
-            <li class="treeview {{ areActiveRoutes(['registration.index', 'registration.store','service.index', 'service.store']) }}">
+            <li class="treeview {{ areActiveRoutes([
+            'device.counts',
+            'device.registration',
+              'registration.index',
+              'registration.store',
+              'service.index',
+              'service.store',
+              'reports.index'
+            ]) }}">
               <a href="#"><i class="fa fa-link"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/service') }}">Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
+                <li><a href="{{ url('/reports') }}">Phone Counts</a></li>
               </ul>
             </li>
             <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show','user.index','user.create','user.edit']) }}">

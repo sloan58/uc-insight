@@ -41,11 +41,43 @@ Route::resource('firmware', 'FirmwareController');
 //User
 Route::resource('user', 'UserController');
 
-// Authentication routes...
+//Reporting
+Route::group(['prefix' => 'reports'], function() {
+
+    //Device Reports
+    Route::group(['prefix' => 'device'], function () {
+
+        Route::get('counts', [
+            'as' => 'device.counts',
+            'uses' => 'ReportController@deviceCounts']);
+
+        Route::get('registration', [
+            'as' => 'device.registration',
+            'uses' => 'ReportController@deviceRegistration']);
+
+        Route::post('counts', [
+            'as' => 'device.counts',
+            'uses' => 'ReportController@deviceCounts']);
+
+        Route::post('registration', [
+            'as' => 'device.registration',
+            'uses' => 'ReportController@deviceRegistration']);
+
+    });
+
+    //System Reports
+    Route::group(['prefix' => 'system'], function () {
+
+        Route::get('services', 'ReportController@systemServices');
+
+    });
+});
+
+//Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-// Registration routes...
+//Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
