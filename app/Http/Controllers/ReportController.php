@@ -40,64 +40,6 @@ class ReportController extends Controller
                 'width' => 2000
             ]);
 
-        return view('lavachart/index', compact('piechart'));
-    }
-
-    /**
-     * Get all devices from CUCM device
-     * table and return registration status.
-     *
-     * @return \Illuminate\View\View
-     * @throws \App\Exceptions\SoapException
-     */
-    public function deviceRegistration()
-    {
-        set_time_limit(0);
-
-        $sxml = new RisSoap();
-        $data = executeQuery('SELECT name FROM device');
-
-        $deviceList = [];
-
-        foreach($data as $i)
-        {
-            $deviceList[] = $i->name;
-        }
-
-        $deviceList = createRisPhoneArray($deviceList);
-        $finalReport = [];
-
-        foreach(array_chunk($deviceList, 1000, true) as $chunk)
-        {
-            $SelectCmDeviceResult = $sxml->getDeviceIp($chunk);
-            $res = processRisResults($SelectCmDeviceResult,$chunk);
-
-            foreach($res as $i)
-            {
-                $finalReport[] = $i;
-            }
-        }
-
-        return view('registration.show', compact('finalReport'));
-    }
-
-    /**
-     * Return the service status for
-     * all CUCM cluster nodes and services
-     *
-     * @return \Illuminate\View\View
-     */
-    public function systemServices()
-    {
-        $data = executeQuery('SELECT name FROM processnode WHERE tkprocessnoderole = 1 AND name != "EnterpriseWideData"');
-
-        $clusterStatus = [];
-        foreach($data as $node)
-        {
-            $ris = new ControlCenterSoap();
-            $clusterStatus[$node->name] = $ris->getServiceStatus();
-        }
-
-        return view('service.show', compact('clusterStatus'));
+        return view('reports.device.counts', compact('piechart'));
     }
 }

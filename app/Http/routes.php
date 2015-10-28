@@ -51,25 +51,6 @@ Route::group(['prefix' => 'reports'], function() {
             'as' => 'device.counts',
             'uses' => 'ReportController@deviceCounts']);
 
-        Route::get('registration', [
-            'as' => 'device.registration',
-            'uses' => 'ReportController@deviceRegistration']);
-
-        Route::post('counts', [
-            'as' => 'device.counts',
-            'uses' => 'ReportController@deviceCounts']);
-
-        Route::post('registration', [
-            'as' => 'device.registration',
-            'uses' => 'ReportController@deviceRegistration']);
-
-    });
-
-    //System Reports
-    Route::group(['prefix' => 'system'], function () {
-
-        Route::get('services', 'ReportController@systemServices');
-
     });
 });
 

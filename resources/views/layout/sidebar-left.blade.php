@@ -38,8 +38,7 @@
               </ul>
             </li>
             <li class="treeview {{ areActiveRoutes([
-            'device.counts',
-            'device.registration',
+              'device.counts',
               'registration.index',
               'registration.store',
               'service.index',
@@ -50,7 +49,7 @@
               <ul class="treeview-menu">
                 <li><a href="{{ url('/service') }}">Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
-                <li><a href="{{ url('/reports') }}">Phone Counts</a></li>
+                <li><a href="{{ url('/reports/device/counts') }}">Phone Counts</a></li>
               </ul>
             </li>
             <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show','user.index','user.create','user.edit']) }}">
