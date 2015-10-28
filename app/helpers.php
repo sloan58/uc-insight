@@ -387,7 +387,7 @@ function executeQuery($sql)
 {
     $axl = new AxlSoap();
 
-    $result = $axl->executeSQLQuery($sql);
+    $result = $axl->executeQuery($sql);
     return checkQueryResult($result);
 
 }

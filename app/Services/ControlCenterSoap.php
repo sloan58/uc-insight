@@ -6,12 +6,12 @@ use SoapClient;
 use App\Cluster;
 use App\Exceptions\SoapException;
 
-class ControlCenterSoap {
+class ControlCenterSoap extends SoapClient {
 
     /**
      * @var resource
      */
-    protected $client;
+    private $cluster;
 
     /**
      *
@@ -20,7 +20,7 @@ class ControlCenterSoap {
     {
         $this->cluster = Cluster::where('active', true)->first();
 
-        $this->client = new SoapClient('https://' . $this->cluster->ip . '/controlcenterservice2/services/ControlCenterServices?wsdl',
+        parent::__construct('https://' . $this->cluster->ip . '/controlcenterservice2/services/ControlCenterServices?wsdl',
             [
                 'trace' => true,
                 'exceptions' => true,
@@ -34,53 +34,13 @@ class ControlCenterSoap {
 
     /**
      * @return mixed
-     */
-    public function getFunctions()
-    {
-        return $this->client->__getFunctions();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastRequest()
-    {
-        return $this->client->__getLastRequest();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastRequestHeaders()
-    {
-        return $this->client->__getLastRequestHeaders();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastResponseHeaders()
-    {
-        return $this->client->__getLastResponseHeaders();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastResponse()
-    {
-        return $this->client->__getLastResponse();
-    }
-
-    /**
-     * @return mixed
      * @throws SoapException
      */
     public function getServiceStatus()
     {
         try {
 
-            $status =  $this->client->soapGetServiceStatus([
+            $status =  $this->soapGetServiceStatus([
                 'ServiceStatus' => ''
             ]);
 

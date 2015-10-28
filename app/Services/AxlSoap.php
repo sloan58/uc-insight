@@ -9,12 +9,12 @@ use App\Cluster;
  * Class AxlSoap
  * @package App\Services
  */
-class AxlSoap {
+class AxlSoap extends SoapClient {
 
     /**
      * @var resource
      */
-    protected $client;
+    private $cluster;
 
 
     /**
@@ -24,7 +24,7 @@ class AxlSoap {
     {
         $this->cluster = Cluster::where('active', true)->first();
 
-        $this->client = new SoapClient(storage_path() . '/app/axl/' . $this->cluster->version . '/AXLAPI.wsdl',
+        parent::__construct(storage_path() . '/app/axl/' . $this->cluster->version . '/AXLAPI.wsdl',
             [
                 'trace' => true,
                 'exceptions' => true,
@@ -36,110 +36,15 @@ class AxlSoap {
         );
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFunctions()
-    {
-        return $this->client->__getFunctions();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastRequest()
-    {
-        return $this->client->__getLastRequest();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastRequestHeaders()
-    {
-        return $this->client->__getLastRequestHeaders();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastResponseHeaders()
-    {
-        return $this->client->__getLastResponseHeaders();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastResponse()
-    {
-        return $this->client->__getLastResponse();
-    }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
-    public function getPhone($macAddress)
-    {
-        try {
-            return $this->client->getPhone([
-                'name' => $macAddress
-            ]);
-        } catch(SoapFault $E) {
-
-            dd($E);
-            return $E;
-
-        }
-    }
-
-    /**
-     * @param $appUserId
-     * @return \Exception|\SoapFault
-     */
-    public function getAppUser($appUserId)
-    {
-        try {
-            return $this->client->getAppUser([
-                'userid' => $appUserId
-            ]);
-        } catch(SoapFault $E) {
-
-//            dd($E);
-            return $E;
-        }
-    }
-
-    /**
-     * @param $appUserId
-     * @param $devices
-     * @return \Exception|SoapFault
-     */
-    public function updateAppUser($appUserId,$devices)
-    {
-        try {
-            return $this->client->updateAppUser([
-                'userid' => $appUserId,
-                'associatedDevices' => [
-                    'device' => $devices
-                ]
-            ]);
-        } catch(SoapFault $E) {
-
-            dd($E);
-            return $E;
-        }
-    }
 
     /**
      * @param $sql
      * @return \Exception|SoapFault
      */
-    public function executeSQLQuery($sql)
+    public function executeQuery($sql)
     {
         try {
-            return $this->client->executeSQLQuery([
+            return $this->executeSQLQuery([
                 'sql' => $sql,
             ]);
         } catch(SoapFault $E) {

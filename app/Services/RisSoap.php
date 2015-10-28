@@ -6,18 +6,18 @@ use SoapClient;
 use App\Cluster;
 use App\Exceptions\SoapException;
 
-class RisSoap {
+class RisSoap extends SoapClient{
 
     /**
      * @var resource
      */
-    protected $client;
+    private $cluster;
 
     public function __construct()
     {
         $this->cluster = Cluster::where('active', true)->first();
 
-        $this->client = new SoapClient(storage_path() . '/app/sxml/RISAPI.wsdl',
+        parent::__construct(storage_path() . '/app/sxml/RISAPI.wsdl',
             [
                 'trace' => true,
                 'exceptions' => true,
@@ -29,45 +29,6 @@ class RisSoap {
         );
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFunctions()
-    {
-        return $this->client->__getFunctions();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastRequest()
-    {
-        return $this->client->__getLastRequest();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastRequestHeaders()
-    {
-        return $this->client->__getLastRequestHeaders();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastResponseHeaders()
-    {
-        return $this->client->__getLastResponseHeaders();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastResponse()
-    {
-        return $this->client->__getLastResponse();
-    }
 
     /**
      * @param $phoneArray
@@ -77,7 +38,7 @@ class RisSoap {
     public function getDeviceIp($phoneArray)
     {
         try {
-            $response = $this->client->SelectCmDevice('',[
+            $response = $this->SelectCmDevice('',[
                 'MaxReturnedDevices'=>'1000',
                 'Class'=>'Any',
                 'Model'=>'255',
