@@ -18,6 +18,11 @@
     {!! Form::label('Password','Password') !!}
     {!! Form::password('password', ['class' => 'form-control', 'placeholder' => '********************']) !!}
 </div>
+<!-- User Type Form Input -->
+<div class="form-group">
+    {!! Form::label('UserType','UserType') !!}
+    {!! Form::select('user_type', ['AppUser' => 'Application User', 'User' => 'End User'] , $userType) !!}
+</div>
 <!-- Version Form Input -->
 <div class="form-group">
     {!! Form::label('Version','Version') !!}

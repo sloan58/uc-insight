@@ -8,7 +8,7 @@
                     <div class="panel-heading">New Cluster Settings</div>
                     <div class="panel-body">
                         {!! Form::open(['route' => 'cluster.store']) !!}
-                            @include('cluster.partials.form', ['active' => false, 'version' => '10.5'])
+                            @include('cluster.partials.form', ['active' => false, 'version' => '10.5', 'userType' => 'application'])
                         {!! Form::close() !!}
                     </div>
                 </div>

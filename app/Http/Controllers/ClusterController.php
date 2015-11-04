@@ -76,6 +76,8 @@ class ClusterController extends Controller
         $cluster->version = $request->version;
         $cluster->username = $request->username;
         $cluster->password = $request->password;
+        $cluster->user_type = $request->user_type;
+
 
         $cluster->save();
 
@@ -123,6 +125,7 @@ class ClusterController extends Controller
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;
+        $cluster->user_type = $request->user_type;
         $cluster->version = $request->version;
         $cluster->verify_peer = $request->verify_peer ? true : false;
         $cluster->password = checkPassword($cluster->password,$request->password);
