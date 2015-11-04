@@ -388,24 +388,8 @@ function executeQuery($sql)
     $axl = new AxlSoap();
 
     $result = $axl->executeQuery($sql);
-    return checkQueryResult($result);
 
-}
-
-function checkQueryResult($result)
-{
     switch($result) {
-        case isset($result->faultcode) && $result->faultcode == 'HTTP':
-            throw new SoapException('Server Error.  Please check your WSDL version is correct for the active cluster.');
-            break;
-
-        case isset($result->faultstring):
-            throw new SoapException($result->faultstring);
-            break;
-
-        case !isset($result->return->row):
-            throw new SoapException('No Results Found');
-            break;
 
         case is_array($result->return->row):
             return $result->return->row;
@@ -415,7 +399,13 @@ function checkQueryResult($result)
             $return = [];
             $return[0] = $result->return->row;
             return $return;
+
     }
+}
+
+function checkQueryResult($result)
+{
+
 }
 
 function getHeaders($data)

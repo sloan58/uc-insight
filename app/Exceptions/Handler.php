@@ -2,9 +2,10 @@
 
 namespace App\Exceptions;
 
+use Log;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laracasts\Flash\Flash;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -47,9 +48,26 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
+        /*
+         * Soap Fault Exceptions
+         */
         if ($e instanceof SoapException) {
-            Flash::error($e->message);
-            return redirect()->back();
+            switch($e) {
+                case isset($e->message->faultcode) && $e->message->faultcode == 'HTTP':
+                    Flash::error('Server Error.  Please check your WSDL version is correct for the active cluster.');
+                    return redirect()->back();
+                    break;
+
+                case isset($e->message->faultstring):
+                    Flash::error($e->message->faultstring);
+                    return redirect()->back();
+                    break;
+
+                default:
+                    Flash::error('Unknown Error.  Please check system logs');
+                    Log::error('Unknown Error.', [ $e ]);
+                    return redirect()->back();
+            }
         }
 
         return parent::render($request, $e);

@@ -4,6 +4,7 @@ namespace App\Services;
 use SoapFault;
 use SoapClient;
 use App\Cluster;
+use App\Exceptions\SoapException;
 
 /**
  * Class AxlSoap
@@ -47,8 +48,8 @@ class AxlSoap extends SoapClient {
             return $this->executeSQLQuery([
                 'sql' => $sql,
             ]);
-        } catch(SoapFault $E) {
-            return $E;
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
         }
     }
 
