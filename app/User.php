@@ -39,4 +39,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->roles()->lists('id')->all();
     }
+
+    public function sqls()
+    {
+        return $this->belongsToMany('App\Sql');
+    }
+
 }

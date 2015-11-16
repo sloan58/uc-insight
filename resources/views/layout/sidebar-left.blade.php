@@ -30,10 +30,17 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">Menu</li>
-            <li class="treeview {{ areActiveRoutes(['sql.index','sql.store','sql.history', 'sql.show']) }}">
+            <li class="treeview {{ areActiveRoutes([
+            'sql.index',
+            'sql.store',
+            'sql.history',
+            'sql.show',
+            'sql.favorites'
+            ]) }}">
               <a href="#"><i class="fa fa-link"></i> <span>SQL Query Tool</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/sql') }}">New Query</a></li>
+                <li><a href="{{ url('/sql/favorites') }}">My Favorite Queries</a></li>
                 <li><a href="{{ url('/sql/history') }}">Query History</a></li>
               </ul>
             </li>

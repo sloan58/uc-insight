@@ -21,6 +21,7 @@
                 <tr>
                     <th>ID</th>
                     <th>SQL Statement: Click to re-run queries</th>
+                    <th>Manage Favorites</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,22 @@
                 <tr>
                     <td>{{ $sql->id }}</td>
                     <td>{{ $sql->sql }}</td>
+                    <td>
+                        <div class="col-md-4">
+                        @if(\Auth::user()->sqls->contains($sql->id))
+                            {!! Form::open(['route' => 'favorite.destroy']) !!}
+                            {!! Form::hidden('_method', 'DELETE') !!}
+                            {!! Form::hidden('favorite', $sql->id) !!}
+                            {!! Form::submit('Remove from Favorites', ['class' => 'btn btn-small btn-warning']) !!}
+                            {!! Form::close() !!}
+                        @else
+                            {!! Form::open(['route' => 'favorite.store']) !!}
+                            {!! Form::hidden('favorite', $sql->id) !!}
+                            {!! Form::submit('Add to Favorites', ['class' => 'btn btn-small btn-success']) !!}
+                            {!! Form::close() !!}
+                        @endif
+                        </div>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

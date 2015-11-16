@@ -22,9 +22,26 @@ Route::get('sql/history', [
     'as' => 'sql.history',
     'uses' => 'SqlController@history'
 ]);
-Route::resource('sql','SqlController',
-    ['except' => ['destroy','edit']]
-);
+
+Route::get('sql/favorites', [
+    'as' => 'sql.favorites',
+    'uses' => 'SqlController@favorites'
+]);
+
+Route::resource('sql','SqlController', [
+    'except' => [
+        'destroy',
+        'edit'
+    ]
+]);
+
+//SQL Favorites
+Route::resource('favorite', 'FavoriteController', [
+    'only' => [
+        'store',
+        'destroy'
+    ]
+]);
 
 //Registration
 Route::resource('registration', 'RegistrationController');

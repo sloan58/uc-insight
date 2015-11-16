@@ -42,7 +42,7 @@ class SqlController extends Controller
         $data = executeQuery($sql);
         $format = getHeaders($data);
 
-        Sql::firstOrCreate([
+        $newSql = Sql::firstOrCreate([
             'sql' => $sql
         ]);
 
@@ -66,5 +66,12 @@ class SqlController extends Controller
 
         return view('sql.history', compact('sql'));
 
+    }
+
+    public function favorites()
+    {
+        $favorites = \Auth::user()->sqls()->get();
+
+        return view('sql.favorites', compact('favorites'));
     }
 }
