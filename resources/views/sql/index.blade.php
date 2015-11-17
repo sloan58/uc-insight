@@ -16,9 +16,11 @@
                     <div class="col-sm-8">
                       <textarea type="textarea" id="sqlStatement" name="sqlStatement" placeholder="Enter SQL Statement Here..."
                              class="form-control">{{ $sql or '' }}</textarea>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">
-                            Submit Query
-                        </button>
+                        @if(\Auth::user()->hasRole(['Administrator', 'SQL Admin']))
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                Submit Query
+                            </button>
+                        @endif
                     </div>
                   </div>
             </form>
@@ -29,7 +31,7 @@
 @if(isset($data) && $data != '')
 <div class="row">
     <div class="col-sm-12">
-        <table id="sql-table" class="table table-striped row-border">
+        <table id="sql-table" class="table table-striped table-bordered dt-responsive nowrap">
             <thead>
             <tr>
             @foreach($format as $header)

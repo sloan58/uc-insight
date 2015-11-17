@@ -24,13 +24,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    <script>
-
-        $('#role_list').select2({
-            placeholder: 'Select Roles'
-        });
-
-    </script>
-@endsection

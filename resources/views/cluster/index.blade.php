@@ -17,7 +17,7 @@
     @if(isset($clusters))
         <div class="row">
             <div class="col-sm-12">
-                <table id="cluster-table" class="table table-striped row-border">
+                <table id="cluster-table" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead>
                     <tr>
                         <th>ID</th>

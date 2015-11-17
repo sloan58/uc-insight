@@ -55,17 +55,19 @@ class Handler extends ExceptionHandler
             switch($e) {
                 case isset($e->message->faultcode) && $e->message->faultcode == 'HTTP':
                     Flash::error('Server Error.  Please check your WSDL version is correct for the active cluster.');
+                    Log::error('Soap Client Error.', [ 'Incorrect WSDL Version' ]);
                     return redirect()->back();
                     break;
 
                 case isset($e->message->faultstring):
                     Flash::error($e->message->faultstring);
+                    Log::error('Soap Client Error.', [ $e->message->faultstring ]);
                     return redirect()->back();
                     break;
 
                 default:
-                    Flash::error('Unknown Error.  Please check system logs');
-                    Log::error('Unknown Error.', [ $e ]);
+                    Flash::error($e->message);
+                    Log::error('Soap Client Error.', [ $e->message ]);
                     return redirect()->back();
             }
         }

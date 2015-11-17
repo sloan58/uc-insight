@@ -52,10 +52,17 @@ class UserController extends Controller
         $user->password = bcrypt(checkPassword($user->password,$request->password));
         $user->save();
 
-        if($request->input('role_list'))
+        if(!$request->input('role_list'))
         {
-            $user->roles()->sync($request->input('role_list'));
+            $roleList = [];
+
+        } else {
+
+            $roleList = $request->input('role_list');
+
         }
+
+        $user->roles()->sync($roleList);
 
         Flash::success('User Updated!');
 

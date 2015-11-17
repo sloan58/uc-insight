@@ -27,3 +27,13 @@
 <div class="form-group">
     {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
 </div>
+
+@section('scripts')
+    <script>
+
+        $('#role_list').select2({
+            placeholder: 'Select Roles'
+        });
+
+    </script>
+@endsection

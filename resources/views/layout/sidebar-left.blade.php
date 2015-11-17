@@ -39,8 +39,10 @@
             ]) }}">
               <a href="#"><i class="fa fa-link"></i> <span>SQL Query Tool</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('/sql') }}">New Query</a></li>
-                <li><a href="{{ url('/sql/favorites') }}">My Favorite Queries</a></li>
+                @if(\Auth::user()->hasRole(['Administrator', 'SQL Admin']))
+                  <li><a href="{{ url('/sql') }}">New Query</a></li>
+                @endif
+                <li><a href="{{ url('/sql/favorites') }}">Favorite Queries</a></li>
                 <li><a href="{{ url('/sql/history') }}">Query History</a></li>
               </ul>
             </li>

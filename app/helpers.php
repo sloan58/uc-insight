@@ -391,6 +391,10 @@ function executeQuery($sql)
 
     switch($result) {
 
+        case !isset($result->return->row):
+            throw new SoapException('No Results Found');
+            break;
+
         case is_array($result->return->row):
             return $result->return->row;
             break;

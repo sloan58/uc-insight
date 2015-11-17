@@ -16,7 +16,7 @@
     @if(isset($favorites))
         <div class="row">
             <div class="col-sm-12">
-                <table id="history-table" class="table table-striped row-border">
+                <table id="history-table" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -35,12 +35,12 @@
                                         {!! Form::open(['route' => 'favorite.destroy']) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
                                         {!! Form::hidden('favorite', $sql->id) !!}
-                                        {!! Form::submit('Remove from Favorites', ['class' => 'btn btn-small btn-warning']) !!}
+                                        {!! Form::submit('Remove Favorite', ['class' => 'btn btn-small btn-warning']) !!}
                                         {!! Form::close() !!}
                                     @else
                                         {!! Form::open(['route' => 'favorite.store']) !!}
                                         {!! Form::hidden('favorite', $sql->id) !!}
-                                        {!! Form::submit('Add to Favorites', ['class' => 'btn btn-small btn-success']) !!}
+                                        {!! Form::submit('Add Favorite', ['class' => 'btn btn-small btn-success']) !!}
                                         {!! Form::close() !!}
                                     @endif
                                 </div>
