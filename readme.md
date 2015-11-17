@@ -36,6 +36,10 @@ npm install
 ~~~
 bower install
 ~~~
+- Run gulp
+~~~
+gulp
+~~~
 - Configure your environment variables and database settings.  A template file named .env.example has been included.  Copy this file to .env and modify the settings as needed.
 - Migrate the database
 ~~~
@@ -47,3 +51,4 @@ php artisan db:seed
 ~~~
 
 There will be a user created with an email of 'admin@admin.com' and password 'admin' which you can use to login for the first time.  After that, you can create your own local accounts and configure your CUCM cluster settings under Admin Settings->Clusters.
+Updates are added frequently so if you pull a fresh copy of this repo, just run through the steps above once again.
