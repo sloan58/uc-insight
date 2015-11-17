@@ -34,7 +34,7 @@
                         <tr>
                            <td>{{$cluster->id}}</td>
                            <td>{{$cluster->name}}</td>
-                            <td>{{$cluster->active ? 'Active' : ''}}</td>
+                            <td>{{\Auth::user()->clusters_id == $cluster->id ? 'Active' : ''}}</td>
                             <td>{{$cluster->ip}}</td>
                             <td>{{$cluster->username}}</td>
                             <!-- we will also add show, edit, and delete buttons -->

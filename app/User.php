@@ -45,4 +45,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany('App\Sql');
     }
 
+    public function cluster()
+    {
+        return $this->belongsTo('App\Cluster', 'clusters_id');
+    }
+
 }

@@ -64,22 +64,20 @@ class ClusterController extends Controller
 
         $cluster = new Cluster();
 
-        if($request->active)
-        {
-            DB::table('clusters')->update(['active' => false]);
-            $cluster->active = true;
-
-        }
-
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->version = $request->version;
         $cluster->username = $request->username;
         $cluster->password = $request->password;
         $cluster->user_type = $request->user_type;
-
-
         $cluster->save();
+
+        if($request->active)
+        {
+            \Auth::user()->clusters_id = $cluster->id;
+            \Auth::user()->save();
+
+        }
 
         Flash::success('Cluster added!');
 
@@ -115,13 +113,6 @@ class ClusterController extends Controller
      */
     public function update(Request $request, Cluster $cluster)
     {
-        if($request->active)
-        {
-            DB::table('clusters')->update(['active' => false]);
-            $cluster->active = true;
-
-        }
-
         $cluster->name = $request->name;
         $cluster->ip = $request->ip;
         $cluster->username = $request->username;
@@ -130,6 +121,13 @@ class ClusterController extends Controller
         $cluster->verify_peer = $request->verify_peer ? true : false;
         $cluster->password = checkPassword($cluster->password,$request->password);
         $cluster->save();
+
+        if($request->active)
+        {
+            \Auth::user()->clusters_id = $cluster->id;
+            \Auth::user()->save();
+
+        }
 
         Flash::success('Cluster info updated!');
 

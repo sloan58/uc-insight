@@ -15,7 +15,7 @@ class RisSoap extends SoapClient{
 
     public function __construct()
     {
-        $this->cluster = Cluster::where('active', true)->first();
+        $this->cluster = \Auth::user()->cluster;
 
         parent::__construct(storage_path() . '/app/sxml/RISAPI.wsdl',
             [
