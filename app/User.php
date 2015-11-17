@@ -50,4 +50,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsTo('App\Cluster', 'clusters_id');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
 }
