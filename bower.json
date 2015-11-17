@@ -20,6 +20,9 @@
     "jquery": "~2.1.4",
     "ionicons": "~2.0.1",
     "CodeMirror": "~5.7.0",
-    "select2": "~4.0.0"
+    "select2": "~4.0.0",
+    "datatables": "~1.10.10",
+    "datatables-buttons": "~1.1.0",
+    "datatables-plugins": "~1.10.10"
   }
 }
