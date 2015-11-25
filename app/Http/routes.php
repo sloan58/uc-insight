@@ -17,6 +17,10 @@ Route::get('/', [
     'uses' => 'DashboardController@index'
 ]);
 
+Route::get('fresh', function(){
+    return view('fresh-table');
+});
+
 //SQL
 Route::get('sql/history', [
     'as' => 'sql.history',

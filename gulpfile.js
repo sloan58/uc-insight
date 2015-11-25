@@ -118,6 +118,7 @@ elixir(function(mix) {
         'buttons.jqueryui.js',
         'buttons.print.js',
         'select2.js',
+        'bootstrap-table.js',
         'app.js'
     ], 'public/assets/js/app.js', 'resources/assets/js/');
 
@@ -129,6 +130,7 @@ elixir(function(mix) {
         'codemirror.less',
         'dataTables.less',
         'select2.less',
+        'fresh-bootstrap-table.less',
         'app.less'
     ], 'public/assets/css');
 
