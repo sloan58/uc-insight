@@ -4,7 +4,7 @@
 
     <div class="row page-title-row">
         <div class="col-md-6">
-            <h3>Cluster <small>» Listing</small></h3>
+            <h3>User <small>» Listing</small></h3>
         </div>
         <div class="col-md-6 text-right">
             <a type="button" class="btn btn-success btn-md" href="user/create" role="button">
@@ -23,7 +23,7 @@
                         <th>Username</th>
                         <th>Email Address</th>
                         <th>Actions</th>
-                        <th></th>
+                        {{--<th></th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -31,18 +31,12 @@
                         <tr>
                            <td>{{$user->name}}</td>
                            <td>{{$user->email}}</td>
-                            <!-- we will also add show, edit, and delete buttons -->
                             <td>
-                                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                                <a class="btn btn-small btn-info" href="{{ URL::to('user/' . $user->name . '/edit') }}">Edit this User</a>
-                            </td>
-                            <td>
-                                <div class="col-md-4">
-                                {!! Form::open(['url' => 'user/' . $user->name, 'class' => 'pull-right']) !!}
-                                {!! Form::hidden('_method', 'DELETE') !!}
-                                {!! Form::submit('Delete this User', ['class' => 'btn btn-small btn-danger']) !!}
-                                {!! Form::close() !!}
-                                </div>
+                                <!-- edit this User -->
+                                <a href="{!! route('user.edit', $user->name) !!}" title="Edit User"><i class="fa fa-pencil-square-o fa-2x enabled"></i></a>
+
+                                <!-- delete this User -->
+                                <a href="" data-toggle="modal" data-target="#modal-delete" title="Delete User"><i class="fa fa-trash-o fa-2x enabled deletable"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -51,6 +45,38 @@
             </div>
         </div>
     @endif
+
+    {{-- Confirm Delete --}}
+    <div class="modal fade" id="modal-delete" tabIndex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Please Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">
+                        <i class="fa fa-question-circle fa-lg"></i> &nbsp;
+                        Are you sure you want to delete the user {{$user->name}}?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="{{ route('user.destroy', $user->name) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-times-circle"></i> Yes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('scripts')

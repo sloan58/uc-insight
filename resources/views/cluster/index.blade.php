@@ -26,7 +26,6 @@
                         <th>Publisher IP</th>
                         <th>Username</th>
                         <th>Actions</th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,16 +38,11 @@
                             <td>{{$cluster->username}}</td>
                             <!-- we will also add show, edit, and delete buttons -->
                             <td>
-                                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                                <a class="btn btn-small btn-info" href="{{ URL::to('cluster/' . $cluster->id . '/edit') }}">Edit this Cluster</a>
-                            </td>
-                            <td>
-                                <div class="col-md-4">
-                                    {!! Form::open(['url' => 'cluster/' . $cluster->id, 'class' => 'pull-right']) !!}
-                                    {!! Form::hidden('_method', 'DELETE') !!}
-                                    {!! Form::submit('Delete this Cluster', ['class' => 'btn btn-small btn-danger']) !!}
-                                    {!! Form::close() !!}
-                                </div>
+                                <!-- edit this Cluster -->
+                                <a href="{!! route('cluster.edit', $cluster->id) !!}" title="Edit Cluster"><i class="fa fa-pencil-square-o fa-2x enabled"></i></a>
+
+                                <!-- delete this User -->
+                                <a href="" data-toggle="modal" data-target="#modal-delete" title="Delete Clustetr"><i class="fa fa-trash-o fa-2x enabled deletable"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -57,6 +51,38 @@
             </div>
         </div>
     @endif
+
+    {{-- Confirm Delete --}}
+    <div class="modal fade" id="modal-delete" tabIndex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Please Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">
+                        <i class="fa fa-question-circle fa-lg"></i> &nbsp;
+                        Are you sure you want to delete the cluster {{$cluster->name}}?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="{{ route('cluster.destroy', $cluster->id) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-times-circle"></i> Yes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('scripts')

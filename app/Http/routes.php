@@ -52,10 +52,11 @@ Route::resource('cluster', 'ClusterController');
 //Service Status
 Route::resource('service', 'ServiceStatusController');
 
-//Firmware Status
-Route::resource('firmware', 'FirmwareController');
 
 //User
+Route::get('new-index', function(){
+   return view('user.new-index');
+});
 Route::resource('user', 'UserController');
 
 //Reporting
