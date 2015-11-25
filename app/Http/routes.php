@@ -52,8 +52,6 @@ Route::resource('cluster', 'ClusterController');
 //Service Status
 Route::resource('service', 'ServiceStatusController');
 
-//Firmware Status
-Route::resource('firmware', 'FirmwareController');
 
 //User
 Route::resource('user', 'UserController');
