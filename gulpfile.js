@@ -86,6 +86,12 @@ elixir(function(mix) {
         ).copy(
             bowerLoc + 'select2/dist/js/select2.full.min.js',
             resourceLoc + 'js/select2.js'
+        ).copy(
+            bowerLoc + 'bootstrap-table/src/bootstrap-table.js',
+            resourceLoc + 'js/bootstrap-table.js'
+        ).copy(
+            bowerLoc + 'bootstrap-table/src/extensions/export/bootstrap-table-export.js',
+            resourceLoc + 'js/bootstrap-table-export.js'
     );
 
     //Copy Font Dependencies
@@ -119,6 +125,7 @@ elixir(function(mix) {
         'buttons.print.js',
         'select2.js',
         'bootstrap-table.js',
+        'bootstrap-table-export.js',
         'app.js'
     ], 'public/assets/js/app.js', 'resources/assets/js/');
 

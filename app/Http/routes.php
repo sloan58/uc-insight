@@ -18,7 +18,14 @@ Route::get('/', [
 ]);
 
 Route::get('fresh', function(){
-    return view('fresh-table');
+    $clusters = \App\Cluster::all();
+
+    if($clusters->isEmpty())
+    {
+        return view('cluster.index');
+    }
+
+    return view('fresh-table',compact('clusters'));
 });
 
 //SQL

@@ -26,6 +26,11 @@ class ClusterController extends Controller
     {
         $clusters = Cluster::all();
 
+        if($clusters->isEmpty())
+        {
+            return view('cluster.index');
+        }
+
         return view('cluster.index', compact('clusters'));
     }
 

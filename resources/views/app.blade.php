@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
      </div><!-- /.content-wrapper -->
 
       {{-- FOOTER --}}
-      @include('layout.footer')
+      {{--@include('layout.footer')--}}
 
       {{-- LEFT SIDEBAR --}}
       @include('layout.sidebar-right')
@@ -80,6 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED JS SCRIPTS -->
     <script src="{{ asset('/assets/js/app.js') }}"></script>
+    <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
 
     @yield('scripts')
 
