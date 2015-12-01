@@ -67,6 +67,8 @@ class DatabaseSeeder extends Seeder
 
         $adminUser->roles()->attach($adminRole->id);
 
+//        factory(App\Cluster::class, 50)->create();
+
         Model::reguard();
     }
 

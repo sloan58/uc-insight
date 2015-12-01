@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid table-top">
     <div class="row sql-box">
         <div class="col-md-8 col-md-offset-3">
             <form method="POST" action="/sql"
