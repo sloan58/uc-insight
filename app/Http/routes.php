@@ -17,28 +17,15 @@ Route::get('/', [
     'uses' => 'DashboardController@index'
 ]);
 
-Route::get('fresh', function(){
-    $clusters = \App\Cluster::all();
-
-    if($clusters->isEmpty())
-    {
-        return view('cluster.index');
-    }
-
-    return view('fresh-table',compact('clusters'));
-});
-
 //SQL
 Route::get('sql/history', [
     'as' => 'sql.history',
     'uses' => 'SqlController@history'
 ]);
-
 Route::get('sql/favorites', [
     'as' => 'sql.favorites',
     'uses' => 'SqlController@favorites'
 ]);
-
 Route::resource('sql','SqlController', [
     'except' => [
         'destroy',
@@ -63,6 +50,24 @@ Route::resource('cluster', 'ClusterController');
 //Service Status
 Route::resource('service', 'ServiceStatusController');
 
+
+//AutoDialer
+Route::get('autodialer/bulk', [
+    'as'   => 'autodialer.bulk.index',
+    'uses' => 'AutoDialerController@bulkIndex'
+]);
+
+//CDR
+Route::get('cdrs', [
+    'as' => 'cdrs.index',
+    'uses' => 'CdrController@index'
+]);
+
+Route::post('autodialer/bulk', [
+    'as'   => 'autodialer.bulk.store',
+    'uses' => 'AutoDialerController@bulkStore'
+]);
+Route::resource('autodialer','AutoDialerController');
 
 //User
 Route::resource('user', 'UserController');

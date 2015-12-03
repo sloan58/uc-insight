@@ -7,6 +7,7 @@ While this application is a work in progress, it does have some useful features 
 ## Features Overview
 - User Management System
 - Multi Cluster Support
+- Autodialer System (requires a Twilio account)
 - AXL Schema Versions 7.0 through 10.5
  
 ## SQL Query Tool
@@ -20,6 +21,9 @@ The service status tool will provide a report of all servers in a CUCM cluster a
 ## Device Registration
 
 The device registration tool will query the CUCM 'device' table for all devices and then obtain the registration status of each device.  The results can be saved as csv, pdf, etc.  The 'device' table contains more than just phones so you'll get reports on things like MOH servers and Transcoders.  This tool is useful to compare device registration status before and after an upgrade or cluster reboot.
+
+## Autodialer System
+The autodialer can place a call to any NANP number and speak a phrase of your choice.  It will take single requests and bulk requests (good for testing number porting!).  A Twilio account is required to use this feature.
 
 ### Installation
 

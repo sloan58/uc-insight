@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 
-class SoapException extends \Exception {
+class TwilioException extends \Exception {
 
 
     public $message;
