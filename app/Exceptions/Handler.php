@@ -72,6 +72,13 @@ class Handler extends ExceptionHandler
             }
         }
 
+        if($e instanceof TwilioException)
+        {
+            Flash::error('Twilio Service Error: ' . $e->message);
+            Log::error('Twilio Client Error: ', [ $e->message ]);
+            return redirect()->back();
+        }
+
         return parent::render($request, $e);
     }
 }

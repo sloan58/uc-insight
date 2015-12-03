@@ -37,7 +37,7 @@
             'sql.show',
             'sql.favorites'
             ]) }}">
-              <a href="#"><i class="fa fa-link"></i> <span>SQL Query Tool</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-database"></i> <span>SQL Query Tool</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 @if(\Auth::user()->hasRole(['Administrator', 'SQL Admin']))
                   <li><a href="{{ url('/sql') }}">New Query</a></li>
@@ -54,15 +54,26 @@
               'service.store',
               'reports.index'
             ]) }}">
-              <a href="#"><i class="fa fa-link"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-file-pdf-o"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/service') }}">Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
                 <li><a href="{{ url('/reports/device/counts') }}">Phone Counts</a></li>
               </ul>
             </li>
+            <li class="treeview {{ areActiveRoutes(['autodialer.index','autodialer.bulk.index']) }}">
+              <a href="#"><i class="fa fa-phone"></i> <span>Auto Dialer</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="{{ url('/autodialer') }}">Single Call</a></li>
+                <li><a href="{{ url('/autodialer/bulk') }}">Bulk Calls</a></li>
+              </ul>
+            </li>
+            <li class=" {{isActiveRoute('cdrs.index')}}">
+              <a href="{!! route('cdrs.index') !!}"><i class="fa fa-random"></i> <span>CDR's</span>
+                <i class=""></i></a>
+            </li>
             <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show','user.index','user.create','user.edit']) }}">
-              <a href="#"><i class="fa fa-link"></i> <span>Admin Settings</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-user-secret"></i> <span>Admin Settings</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/user') }}">Users</a></li>
                 <li><a href="{{ url('/cluster') }}">Clusters</a></li>

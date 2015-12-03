@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/New_York',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => 'daily',
 
     /*
     |--------------------------------------------------------------------------
@@ -215,9 +215,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Gravatar'  => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class
-
-
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

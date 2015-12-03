@@ -7,6 +7,7 @@ While this application is a work in progress, it does have some useful features 
 ## Features Overview
 - User Management System
 - Multi Cluster Support
+- Autodialer System (requires a Twilio account)
 - AXL Schema Versions 7.0 through 10.5
  
 ## SQL Query Tool
