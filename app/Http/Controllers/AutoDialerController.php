@@ -37,8 +37,9 @@ class AutoDialerController extends Controller
     {
         $number = substr($request->number, -10);
         $say = $request->say;
+        $type = $request->type;
 
-        $this->dispatch(new PlaceTwilioCall([[$number,$say]]));
+        $this->dispatch(new PlaceTwilioCall([[$number,$say,$type]]));
 
         Flash::success('Phone Call Submitted!  Check the call logs for status.');
 

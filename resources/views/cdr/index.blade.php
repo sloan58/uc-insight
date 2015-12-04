@@ -29,7 +29,7 @@
                             <td>{{$cdr->message}}</td>
                             <td>{{$cdr->successful ? 'Success' : 'Fail'}}</td>
                             <td>{{$cdr->failurereason}}</td>
-                            <td>{{$cdr->created_at->format('Y-m-d H:i:s')}}</td>
+                            <td>{{$cdr->created_at->format('m-d-Y H:i:s')}}</td>
                         </tr>
                     @endforeach
                 @endif
@@ -58,7 +58,7 @@
                 showColumns: true,
                 pagination: true,
                 striped: true,
-                pageSize: 50,
+                pageSize: 8,
                 pageList: [8,10,25,50,100],
 
                 formatShowingRows: function(pageFrom, pageTo, totalRows){

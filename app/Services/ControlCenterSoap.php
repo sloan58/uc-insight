@@ -18,6 +18,10 @@ class ControlCenterSoap extends SoapClient {
      */
     public function __construct()
     {
+        if(!\Auth::user()->cluster) {
+            throw new SoapException("You have no Active Cluster Selected");
+        }
+
         $this->cluster = \Auth::user()->cluster;
 
         parent::__construct('https://' . $this->cluster->ip . '/controlcenterservice2/services/ControlCenterServices?wsdl',

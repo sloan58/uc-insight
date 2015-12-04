@@ -60,7 +60,10 @@ Route::post('autodialer/bulk', [
     'as'   => 'autodialer.bulk.store',
     'uses' => 'AutoDialerController@bulkStore'
 ]);
-Route::get('autodialer', 'AutoDialerController@index');
+Route::get('autodialer', [
+    'as'   => 'autodialer.index',
+    'uses' => 'AutoDialerController@index'
+]);
 Route::post('autodialer',[
     'as'   => 'autodialer.store',
     'uses' => 'AutoDialerController@placeCall'

@@ -54,13 +54,17 @@ class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
             $number = $call[0];
             $e164 = '+1' . $number;
             $say = $call[1];
+            $type = $call[2];
 
             $cdr = new CDR();
             $cdr->dialednumber = $e164;
             $cdr->callerid = env('TWILIO_FROM');
-            $cdr->calltype = 'Phone Call';
             $cdr->message = $say;
 
+
+            /*
+             * Check that the dialed number is 10 digits
+             */
             if(strlen($number) != 10)
             {
 
@@ -68,29 +72,55 @@ class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
                 $cdr->failurereason = "The Dailed Number " . $number . " is not 10 digits in length";
                 $cdr->save();
 
-                Log::debug("The Dailed Number " . $number . " is not 10 digits in length", ['cdr' => $cdr->id]);
+                Throw new TwilioException("The Dailed Number " . $number . " is not 10 digits in length");
+
+            }
+
+            /*
+             * Check the call type
+             */
+            if(strtolower($type) == 'voice')
+            {
+
+                $callType = 'call';
+                $say = 'http://twimlets.com/message?Message%5B0%5D=' . urlencode($say);
+                $cdr->calltype = 'Phone Call';
+
+
+            } elseif(strtolower($type) == 'text') {
+
+                $callType = 'message';
+                $cdr->calltype = 'Text Message';
 
             } else {
 
-                try {
-
-                    $this->twilio->call($e164, 'http://twimlets.com/message?Message%5B0%5D=' . urlencode($say));
-//                    $this->twilio->message($e164, $say);
-
-                } catch(Exception $e) {
-
-                    $cdr->successful = false;
-                    $cdr->failurereason = $e->getMessage();
-                    $cdr->save();
-
-                    Throw new TwilioException($e->getMessage());
-
-                }
-
-                $cdr->successful = true;
+                $cdr->successful = false;
+                $cdr->failurereason = "The call type " . $type . " is invalid";
                 $cdr->save();
 
+                Throw new TwilioException("The call type " . $type . " is invalid");
+
             }
+
+            /*
+             * Attempt the phone call
+             */
+            try {
+
+                $this->twilio->$callType($e164, $say);
+
+            } catch(Exception $e) {
+
+                $cdr->successful = false;
+                $cdr->failurereason = $e->getMessage();
+                $cdr->save();
+
+                Throw new TwilioException($e->getMessage());
+
+            }
+
+            $cdr->successful = true;
+            $cdr->save();
 
             sleep(2);
 

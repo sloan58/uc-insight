@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Please load a CSV file which includes a 10 digit number in column 1 and your outgoing message in column 2: 2025551234,Hi Mom!">File Format</button>
+                                    <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Please load a CSV file which includes (in order) a 10 digit number, your outgoing message and the call type specified as either 'voice' or 'text'. Ex: 2025551234,Hi Mom!,text">File Format</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                         Cancel
                                     </button>

@@ -15,6 +15,10 @@ class RisSoap extends SoapClient{
 
     public function __construct()
     {
+        if(!\Auth::user()->cluster) {
+            throw new SoapException("You have no Active Cluster Selected");
+        }
+        
         $this->cluster = \Auth::user()->cluster;
 
         parent::__construct(storage_path() . '/app/sxml/RISAPI.wsdl',
