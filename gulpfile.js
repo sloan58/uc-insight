@@ -131,13 +131,13 @@ elixir(function(mix) {
 
     // Compile Less
     mix.less([
-        'AdminLTE.less',
         'skin-blue.min.less',
         'blue.less',
         'codemirror.less',
         'dataTables.less',
         'select2.less',
         'fresh-bootstrap-table.less',
+        'AdminLTE.less',
         'app.less'
     ], 'public/assets/css');
 

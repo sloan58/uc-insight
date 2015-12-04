@@ -13,17 +13,27 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Log;
 
+/**
+ * Class PlaceTwilioCall
+ * @package App\Jobs
+ */
 class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /**
+     * @var $twilio
+     */
     protected $twilio;
+    /**
+     * @var $callList
+     */
     protected $callList;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $callList
      */
     public function __construct($callList)
     {
@@ -34,7 +44,7 @@ class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @throws TwilioException
      */
     public function handle()
     {
@@ -59,7 +69,6 @@ class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
                 $cdr->save();
 
                 Log::debug("The Dailed Number " . $number . " is not 10 digits in length", ['cdr' => $cdr->id]);
-                Log::debug(['callerid' => env('TWILIO_FROM')]);
 
             } else {
 
@@ -68,14 +77,18 @@ class PlaceTwilioCall extends Job implements SelfHandling, ShouldQueue
                     $this->twilio->call($e164, 'http://twimlets.com/message?Message%5B0%5D=' . urlencode($say));
 //                    $this->twilio->message($e164, $say);
 
-                    $cdr->successful = true;
-                    $cdr->save();
-
                 } catch(Exception $e) {
+
+                    $cdr->successful = false;
+                    $cdr->failurereason = $e->getMessage();
+                    $cdr->save();
 
                     Throw new TwilioException($e->getMessage());
 
                 }
+
+                $cdr->successful = true;
+                $cdr->save();
 
             }
 

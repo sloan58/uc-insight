@@ -12,13 +12,28 @@ use Laracasts\Flash\Flash;
 class AutoDialerController extends Controller
 {
 
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('autodialer.index');
     }
 
 
-    public function store(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function placeCall(Request $request)
     {
         $number = substr($request->number, -10);
         $say = $request->say;
@@ -31,12 +46,19 @@ class AutoDialerController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function bulkIndex()
     {
         return view('autodialer.bulk.index');
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function bulkStore(Request $request)
     {
         $file = $request->file('file');

@@ -72,6 +72,9 @@ class Handler extends ExceptionHandler
             }
         }
 
+        /*
+         * Twilio Fault Exceptions
+         */
         if($e instanceof TwilioException)
         {
             Flash::error('Twilio Service Error: ' . $e->message);

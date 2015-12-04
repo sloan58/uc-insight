@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 class ClusterController extends Controller
 {
 
+    /**
+     * Create a new controller instance.
+     */
     public function __construct()
     {
         $this->middleware('auth');
