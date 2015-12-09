@@ -75,6 +75,26 @@ Route::get('cdrs', [
     'uses' => 'CdrController@index'
 ]);
 
+//ITL
+Route::get('itl', [
+    'as'   => 'itl.index',
+    'uses' => 'EraserController@itlIndex'
+]);
+Route::post('itl',[
+    'as'   => 'itl.store',
+    'uses' => 'EraserController@itlStore'
+]);
+
+//CTL
+Route::get('ctl', [
+    'as'   => 'ctl.index',
+    'uses' => 'EraserController@ctlIndex'
+]);
+Route::post('ctl',[
+    'as'   => 'ctl.store',
+    'uses' => 'EraserController@ctlStore'
+]);
+
 //User
 Route::resource('user', 'UserController');
 
@@ -87,7 +107,6 @@ Route::group(['prefix' => 'reports'], function() {
         Route::get('counts', [
             'as' => 'device.counts',
             'uses' => 'ReportController@deviceCounts']);
-
     });
 });
 

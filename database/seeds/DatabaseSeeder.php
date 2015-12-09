@@ -34,6 +34,28 @@ class DatabaseSeeder extends Seeder
             'updated_at' => Carbon::now()
         ]);
 
+        // Create the Admin User
+        $adminUser = \App\User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('admin'),
+            'remember_token' => str_random(10),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $adminUser->roles()->attach($adminRole->id);
+
+        factory(App\User::class, 19)->create();
+        factory(App\Phone::class, 100)->create();
+        factory(App\Eraser::class, 100)
+            ->create();
+            // ->each(function($e) {
+            //     $bulk = App\Bulk::find(rand(1,100));
+            //     $e->bulks()->attach($bulk);
+            // });
+
+//        factory(App\Cluster::class, 50)->create();
         /*
          * TODO: Add features for these roles.....
          */
@@ -54,20 +76,6 @@ class DatabaseSeeder extends Seeder
 //            'created_at' => Carbon::now(),
 //            'updated_at' => Carbon::now()
 //        ]);
-
-        // Create the Admin User
-        $adminUser = \App\User::create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('admin'),
-            'remember_token' => str_random(10),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        $adminUser->roles()->attach($adminRole->id);
-
-//        factory(App\Cluster::class, 50)->create();
 
         Model::reguard();
     }
