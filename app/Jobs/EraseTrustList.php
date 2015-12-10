@@ -9,7 +9,7 @@ use App\Services\AxlSoap;
 use App\Services\PhoneDialer;
 use Illuminate\Contracts\Bus\SelfHandling;
 
-class EraseTrustList extends Job implements SelfHandling
+class EraseTrustList extends Job implements SelfHandling, ShouldQueue
 {
 
     private $eraserList;
