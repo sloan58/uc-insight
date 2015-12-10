@@ -13,7 +13,7 @@ class Eraser extends Model
      */
     protected $fillable = ['phone_id', 'ip_address', 'eraser_type', 'result'];
 
-    public function Phone()
+    public function phone()
     {
         return $this->belongsTo('App\Phone');
     }

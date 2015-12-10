@@ -68,12 +68,19 @@
                 <li><a href="{{ url('/autodialer/bulk') }}">Bulk Calls</a></li>
               </ul>
             </li>
-            <li class="treeview {{ areActiveRoutes(['']) }}">
+            <li class="treeview {{ areActiveRoutes([
+            'itl.index',
+            'ctl.index',
+            'phone.show',
+            'eraser.bulk.index',
+            'eraser.bulk.show',
+            'eraser.bulk.create'
+            ]) }}">
               <a href="#"><i class="fa fa-eraser"></i> <span>Cert Eraser</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ route('ctl.index') }}">CTL</a></li>
                 <li><a href="{{ route('itl.index') }}">ITL</a></li>
-                <li><a href="{{ url('/autodialer/bulk') }}">Bulk</a></li>
+                <li><a href="{{ route('eraser.bulk.index') }}">Bulk</a></li>
               </ul>
             </li>
             <li class=" {{isActiveRoute('cdrs.index')}}">

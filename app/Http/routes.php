@@ -95,6 +95,30 @@ Route::post('ctl',[
     'uses' => 'EraserController@ctlStore'
 ]);
 
+// Eraser Bulk
+Route::get('bulk',[
+    'as'   => 'eraser.bulk.index',
+    'uses' => 'EraserController@bulkIndex'
+]);
+Route::get('bulk/create',[
+    'as'   =>  'eraser.bulk.create',
+    'uses' => 'EraserController@bulkCreate'
+]); 
+Route::get('bulk/{bulk}',[
+    'as'   =>  'eraser.bulk.show',
+    'uses' => 'EraserController@bulkShow'
+]);
+Route::post('bulk',[
+    'as'   => 'eraser.bulk.store',
+    'uses' => 'EraserController@bulkStore'
+]);
+
+// Show Phone
+Route::get('phone/{phone}', [
+    'as'   => 'phone.show',
+    'uses' => 'PhoneController@show'
+]);
+
 //User
 Route::resource('user', 'UserController');
 

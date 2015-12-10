@@ -82,6 +82,16 @@ class Handler extends ExceptionHandler
             return redirect()->back();
         }
 
+        /*
+         * Phone Control Fault Exceptions
+         */
+        if($e instanceof PhoneDialerException)
+        {
+            Flash::error('Phone Dialer Error: ' . $e->message);
+            Log::error('Phone Dialer Error: ', [ $e->message ]);
+            return redirect()->back();
+        }
+
         return parent::render($request, $e);
     }
 }

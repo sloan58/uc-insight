@@ -180,6 +180,25 @@ function setKeys($model,$tleType)
                 case "Cisco 7945":
                 case "Cisco 7961":
                 case "Cisco 7962":
+                    return [
+                        'Init:Settings',
+                        'Key:Settings',
+                        'Key:KeyPad4',
+                        'Key:KeyPad5',
+                        'Key:KeyPad1',
+                        'Key:KeyPad2',
+                        'Key:Soft4',
+                        'Key:Soft2',
+                        'Key:Sleep',
+                        'Key:KeyPadStar',
+                        'Key:KeyPadStar',
+                        'Key:KeyPadPound',
+                        'Key:Sleep',
+                        'Key:Soft4',
+                        'Key:Soft2',
+                        'Init:Services'
+                    ];
+                    break;
                 case "Cisco 7965":
                     return [
 
@@ -408,17 +427,21 @@ function executeQuery($sql)
     }
 }
 
-function generateEraserList($device)
+function generateEraserList($deviceList)
 {
+    $macList = array_column($deviceList, 'mac');
+
     $axl = new AxlSoap();
     $user = $axl->getAxlUser();
-    $devices = createDeviceArray($user,$device);
+    $devices = createDeviceArray($user,$macList);
     $res = $axl->updateAxlUser($devices);
-    $risArray = createRisPhoneArray($device);
+    $risArray = createRisPhoneArray($macList);
+    
     // Get Device IP's
     $sxml = new RisSoap();
     $risResults = $sxml->getDeviceIP($risArray);
     $risPortResults = processRisResults($risResults,$risArray);
+    
     //Fetch device model from type product
     for($i=0; $i<count($risPortResults); $i++)
     {
@@ -426,6 +449,16 @@ function generateEraserList($device)
         {
             $results = $axl->executeQuery('SELECT name FROM typeproduct WHERE enum = "' . $risPortResults[$i]['Product'] . '"');
             $risPortResults[$i]['Model'] = $results->return->row->name;
+        }
+    }
+
+    foreach($deviceList as $row)
+    {
+        $key = array_search($row['mac'], array_column($risPortResults, 'DeviceName'));
+        $risPortResults[$key]['type'] = $row['type'];
+        if(isset($row['bulk_id']))
+        {
+            $risPortResults[$key]['bulk_id'] = $row['bulk_id'];
         }
     }
 

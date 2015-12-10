@@ -1,0 +1,359 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tag",
+				"tag_detail"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"a",
+				"a	<a>"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Laravel Artisan rou",
+				"Laravel Artisan: Route: List"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: Install",
+				"Package Control: Install Package"
+			],
+			[
+				"prv",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"Snippet: php",
+				"Snippet: PHP Method"
+			],
+			[
+				"tabs",
+				"View: Toggle Tabs"
+			]
+		],
+		"width": 798.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Http",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Http/Controllers",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Jobs",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/resources/views"
+	],
+	"file_history":
+	[
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Http/Controllers/EraserController.php",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Jobs/EraseTrustList.php",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/helpers.php",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/views.py",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/templates/organizer/tag_detail.html",
+		"/Users/sloan58/Documents/Django/suorganizer/suorganizer/urls.py",
+		"/Users/sloan58/Documents/Django/suorganizer/blog/templates/blog/base_blog.html",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/templates/organizer/base_organizer.html",
+		"/Users/sloan58/Documents/Django/suorganizer/blog/views.py",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/templates/organizer/startup_list.html",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/templates/organizer/tag_list.html",
+		"/Users/sloan58/Documents/Django/suorganizer/templates/base.html",
+		"/Users/sloan58/Documents/Django/suorganizer/suorganizer/settings.py",
+		"/Users/sloan58/Documents/Django/suorganizer/blog/templates/blog/post_detail.html",
+		"/Users/sloan58/Documents/Django/suorganizer/blog/templates/blog/post_list.html",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/templates/organizer/startup_detail.html",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/README.md",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/testFile.html",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/AdvancedNewFile.sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/User/AdvancedNewFile.sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/Djaneiro/Settings/HTML (Django).sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/User/HTML (Django).sublime-settings",
+		"/Users/sloan58/Documents/Django/suorganizer/organizer/models.py",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/Djaneiro/Settings/Python (Django).sublime-settings",
+		"/Users/sloan58/Library/Application Support/Sublime Text 3/Packages/User/snippets/PHP Method.sublime-snippet",
+		"/Users/sloan58/Copy/Laravel-Code/uc-insight/app/Http/routes.php",
+		"/Users/sloan58/Library/Application Support/Cisco/Unified Communications/Jabber/CSF/Config/service-location.xml",
+		"/Users/sloan58/COSC-UCSM-BAK_01222014",
+		"/Users/sloan58/Copy/Bootstrap-Themes/modern-business/index.html",
+		"/Users/sloan58/Dropbox/Phlare/TwilioControllerAndRoutes.php",
+		"/Users/sloan58/voyseePlayer.html",
+		"/Users/sloan58/voysee.html",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-pass.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-install/3850-03-crf.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-install/3850-03-running-2-updated.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-install/3850-04-running-2-updated.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-install/3850-03-running.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-04-crf-2.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-04-running-2-updated.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-04-running.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/USC/3850-04-crf.txt",
+		"/Users/sloan58/Dropbox/Karma-Tek/PCAOB/PCAOB_SRST/SRST_WASHINGTON.txt",
+		"/Users/sloan58/player-card/player/page.html",
+		"/Users/sloan58/player-card/player/container.html",
+		"/Volumes/STORAGE/CCIE/Notes_and_Configs/SB.txt",
+		"/Users/sloan58/PhpstormProjects/iit-tools/includes/IpPhoneApi.php",
+		"/Users/sloan58/PhpstormProjects/iit-tools/ajax/phoneDialer.php",
+		"/Users/sloan58/PhpstormProjects/iit-tools/dialerSingle.php",
+		"/Users/sloan58/Dropbox/Udacity Nano Degrees/Mockup to Website/portfolio/index.html",
+		"/Users/sloan58/Dropbox/Udacity Nano Degrees/Mockup to Website/portfolio/style.css",
+		"/Users/sloan58/Dropbox/Udacity Nano Degrees/Mockup to Website/app.html"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 158.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"_line",
+			"res",
+			"shift+k",
+			"_line",
+			"line",
+			"%}\n",
+			"Here",
+			"delete_",
+			"line",
+			"11",
+			"chosenMatch",
+			"firstname",
+			"< snmp",
+			" snmp",
+			"<",
+			"interface Vlan360",
+			"tacacs-server",
+			"tacacs"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"snmp",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 66.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 278.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "uc-insight.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"app/helpers.php"
+			],
+			[
+				"tag_",
+				"organizer/templates/organizer/tag_detail.html"
+			],
+			[
+				"organizer/view",
+				"organizer/views.py"
+			],
+			[
+				"views",
+				"blog/views.py"
+			],
+			[
+				"start",
+				"organizer/templates/organizer/startup_list.html"
+			],
+			[
+				"tag_list",
+				"organizer/templates/organizer/tag_list.html"
+			],
+			[
+				"sett",
+				"suorganizer/settings.py"
+			],
+			[
+				"routes",
+				"app/Http/routes.php"
+			],
+			[
+				"autodial",
+				"app/Http/Controllers/AutoDialerController.php"
+			],
+			[
+				"routes.php",
+				"app/Http/routes.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 354.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"bulkin",
+				"bulkIndex"
+			]
+		],
+		"width": 374.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false
+		}
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": false,
+	"side_bar_visible": true,
+	"side_bar_width": 250.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
