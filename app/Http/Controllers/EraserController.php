@@ -46,7 +46,7 @@ class EraserController extends Controller
 
         $this->dispatch(
             new EraseTrustList([
-                ['MAC' => $request->input('macAddress'), 'TLE' => 'itl']
+                ['mac' => $request->input('macAddress'), 'type' => 'itl']
             ])
         );
 
@@ -73,13 +73,6 @@ class EraserController extends Controller
      */
     public function ctlStore(Request $request)
     {
-        Log::info('Received CTL Erase request for: '.$request->input('macAddress'));
-
-        $this->dispatch(
-            new EraseTrustList($request->input('macAddress'),'ctl')
-        );
-
-        Flash::success('Processed Request.  Check table below for status.');
-        return redirect('ctl');
+       
     }
 }

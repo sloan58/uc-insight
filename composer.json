@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "4.*",
         "khill/lavacharts": "2.5.*",
         "aloha/twilio": "^2.0",
-        "keboola/csv": "^1.1"
+        "keboola/csv": "^1.1",
+        "sabre/xml": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\AxlSoap;
+use App\Services\RisSoap;
 use App\Exceptions\SoapException;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -407,9 +408,28 @@ function executeQuery($sql)
     }
 }
 
-function checkQueryResult($result)
+function generateEraserList($device)
 {
+    $axl = new AxlSoap();
+    $user = $axl->getAxlUser();
+    $devices = createDeviceArray($user,$device);
+    $res = $axl->updateAxlUser($devices);
+    $risArray = createRisPhoneArray($device);
+    // Get Device IP's
+    $sxml = new RisSoap();
+    $risResults = $sxml->getDeviceIP($risArray);
+    $risPortResults = processRisResults($risResults,$risArray);
+    //Fetch device model from type product
+    for($i=0; $i<count($risPortResults); $i++)
+    {
+        if($risPortResults[$i]['IsRegistered'])
+        {
+            $results = $axl->executeQuery('SELECT name FROM typeproduct WHERE enum = "' . $risPortResults[$i]['Product'] . '"');
+            $risPortResults[$i]['Model'] = $results->return->row->name;
+        }
+    }
 
+    return $risPortResults;
 }
 
 function getHeaders($data)

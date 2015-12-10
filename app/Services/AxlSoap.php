@@ -17,7 +17,6 @@ class AxlSoap extends SoapClient {
      */
     private $cluster;
 
-
     /**
      *
      */
@@ -54,6 +53,46 @@ class AxlSoap extends SoapClient {
             ]);
         } catch(SoapFault $e) {
             throw new SoapException($e);
+        }
+    }
+
+    /**
+     * @param $appUserId
+     * @return \Exception|\SoapFault
+     */
+    public function getAxlUser()
+    {
+        $userType = 'get' . $this->cluster->user_type;
+
+        try {
+            return $this->$userType([
+                'userid' => $this->cluster->username
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }
+    }
+
+    /**
+     * @param $appUserId
+     * @param $devices
+     * @return \Exception|SoapFault
+     */
+    public function updateAxlUser($devices)
+    {
+        $userType = 'update' . $this->cluster->user_type;
+
+        try {
+            return $this->$userType([
+                'userid' => $this->cluster->username,
+                'associatedDevices' => [
+                    'device' => $devices
+                ]
+            ]);
+        } catch(SoapFault $E) {
+
+            dd($E);
+            return $E;
         }
     }
 
