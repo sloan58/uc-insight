@@ -8,6 +8,7 @@ While this application is a work in progress, it does have some useful features 
 - User Management System
 - Multi Cluster Support
 - Autodialer System (requires a Twilio account)
+- IP Phone Security Cert Eraser
 - AXL Schema Versions 7.0 through 10.5
  
 ## SQL Query Tool
@@ -24,6 +25,9 @@ The device registration tool will query the CUCM 'device' table for all devices 
 
 ## Autodialer System
 The autodialer can place a call to any NANP number and speak a phrase of your choice.  It will take single requests and bulk requests (good for testing number porting!).  A Twilio account is required to use this feature.
+
+## IP Phone Certificate Eraser
+The Certificate Eraser feature will use the IP Phones built in Web API to press the necessary keys for erasing the ITL or CTL security certificate of a phone.  Currently there are a few models (mostly 79XX) supported, with more to added as they key press sequences are recorded.  The sequences are stored in the app/helpers.php file starting on line 147.  Future updates will move the configs to the database with a web management interface.
 
 ### Installation
 

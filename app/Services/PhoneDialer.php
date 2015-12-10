@@ -13,6 +13,7 @@ use App\Eraser;
 use Sabre\Xml\Reader;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use App\Exceptions\PhoneDialerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
@@ -22,12 +23,17 @@ class PhoneDialer {
     /**
      * @var Client
      */
-    public $client;
+    private $client;
 
     /**
      * @var cluster
      */
     private $cluster;
+
+    /**
+     * @var phoneIp
+     */
+    private $phoneIp;
     
     /**
      * @param $phoneIP
@@ -38,26 +44,29 @@ class PhoneDialer {
             throw new SoapException("You have no Active Cluster Selected");
         }
 
+        $this->phoneIP = $phoneIP;
+
         $this->cluster = \Auth::user()->cluster;
 
         $this->client = new Client([
-            'base_uri' => 'http://' . $phoneIP,
+            'base_uri' => 'http://' . $this->phoneIP,
             'verify' => false,
             'headers' => [
                 'Accept' => 'application/xml',
                 'Content-Type' => 'application/xml'
             ],
             'auth' => [
-                    $this->cluster->username, $this->cluster->password
+                    $this->cluster->username, 'something'//$this->cluster->password
                 ],
         ]);
 
         $this->reader = new Reader;
     }
 
-    // public function dial(Eraser $itl,$keys)
-    public function dial($keys)
+    public function dial(Eraser $tle,$keys)
     {
+        $mac = $tle->phone->mac;
+        $ip = $this->phoneIP;
 
         foreach ($keys as $k)
         {
@@ -71,35 +80,33 @@ class PhoneDialer {
 
             try {
 
-                // $response = $this->client->post('http://' . $itl->ip_address . '/CGI/Execute',['body' => $xml]);
+                // $response = $this->client->post('http://' . $tle->ip_address . '/CGI/Execute',['body' => $xml]);
 
                 //Temp workaround for USC NAT
                 $response = $this->client->post('http://10.134.174.78/CGI/Execute',['body' => $xml]);
 
             } catch (RequestException $e) {
 
-                dd($e);
-
                 if($e instanceof ClientException)
                 {
                     //Unauthorized
-                    Log::error('Authentication Exception', [$e]);
-                    // $itl->failure_reason = "Authentication Exception";
-                    // $itl->save();
+                    $tle->failure_reason = "Authentication Exception";
+                    $tle->save();
+                    throw new PhoneDialerException("$mac @ $ip");
                 }
                 elseif($e instanceof ConnectException)
                 {
                     //Can't Connect
-                    Log::error('Connection Exception', [$e]);
-                    // $itl->failure_reason = "Connection Exception";
-                    // $itl->save();
+                    $tle->failure_reason = "Connection Exception";
+                    $tle->save();
+                    throw new PhoneDialerException("$mac @ $ip");
                 }
                 else
                 {
                     //Other exception
-                    Log::error('Unknown Error', [$e]);
-                    // $itl->failure_reason = "Unknown Exception";
-                    // $itl->save();
+                    $tle->failure_reason = "Unknown Exception";
+                    $tle->save();
+                    throw new PhoneDialerException("$mac @ $ip --> $e->getMessage()");
                 }
 
                 return false;
@@ -133,11 +140,10 @@ class PhoneDialer {
                         break;
                 }
 
-                Log::error($errorType, [$response]);
-                // $itl->failure_reason = $errorType;
-                // $itl->result = "Fail";
-                // $itl->save();
-                return false;
+                $tle->failure_reason = $errorType;
+                $tle->result = "Fail";
+                $tle->save();
+                throw new PhoneDialerException("$mac @ $ip --> $errorType");
             }
 
         }

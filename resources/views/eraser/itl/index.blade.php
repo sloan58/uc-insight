@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row page-tctle-row">
+    <div class="row page-title-row">
         <div class="col-md-6">
-            <h3>CTL <small>» Listing</small></h3>
+            <h3>ITL <small>» Listing</small></h3>
         </div>
         <div class="col-md-6 text-right">
             <button type="button" class="btn btn-success btn-md"
-                      onclick="erase_ctl()">
+                      onclick="erase_itl()">
                 <i class="fa fa-plus-circle fa-lg"></i>
-                Erase CTLs
+                Erase ITLs
           </button>
         </div>
     </div>
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-12">
 
-            <table id="ctls-table" class="table table-striped row-border">
+            <table id="itls-table" class="table table-striped row-border">
                 <thead>
                 <tr>
                     <th>Phone Name</th>
@@ -30,20 +30,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($ctls as $ctl)
-                @if(!$ctl->failure_reason)
-                    {{$ctl->failure_reason == 'Passed'}}
+                @foreach ($itls as $itl)
+                @if(!$itl->failure_reason)
+                    {{$itl->failure_reason == 'Passed'}}
                 @endif
                 <tr>
-                    <td>{{ $ctl->phone->mac }}</td>
-                    <td>{{ $ctl->phone->description}}</td>
-                    <td>{{ $ctl->ip_address}}</td>
+                    <td>{{ $itl->phone->mac }}</td>
+                    <td>{{ $itl->phone->description}}</td>
+                    <td>{{ $itl->ip_address}}</td>
                     <td >
-                        <i class="{{ $ctl->result == 'Success' ? 'fa fa-check' : 'fa fa-times' }}"></i>
+                        <i class="{{ $itl->result == 'Success' ? 'fa fa-check' : 'fa fa-times' }}"></i>
                     </td>
-                    <td>{{ $ctl->failure_reason}}</td>
+                    <td>{{ $itl->failure_reason}}</td>
                     <td>
-                        {{ $ctl->updated_at->toDayDateTimeString() }}
+                        {{ $itl->updated_at->toDayDateTimeString() }}
                     </td>
                 </tr>
                 @endforeach
@@ -55,17 +55,17 @@
 </div>
 @stop
 
-@include('ctl.layout.modal')
+@include('eraser.itl.layout.modal')
 
 @section('scripts')
 <script>
-
-    function erase_ctl() {
-      $("#modal-erase-ctl").modal("show");
+    // Confirm file delete
+    function erase_itl() {
+      $("#modal-erase-itl").modal("show");
     }
     // DataTable
     $(function() {
-        $("#ctls-table").DataTable({
+        $("#itls-table").DataTable({
             order: [[5, "desc"]],
             "aoColumnDefs": [
                 {

@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      * @var array
      */
     protected $tables = [
-        'users', 'roles', 'role_user'
+        'users', 'roles', 'role_user', 'phones', 'erasers','bulks', 'bulk_eraser'
     ];
 
     /**
@@ -48,12 +48,13 @@ class DatabaseSeeder extends Seeder
 
         factory(App\User::class, 19)->create();
         factory(App\Phone::class, 100)->create();
+        factory(App\Bulk::class, 100)->create();
         factory(App\Eraser::class, 100)
-            ->create();
-            // ->each(function($e) {
-            //     $bulk = App\Bulk::find(rand(1,100));
-            //     $e->bulks()->attach($bulk);
-            // });
+            ->create()
+            ->each(function($e) {
+                $bulk = App\Bulk::find(rand(1,100));
+                $e->bulks()->attach($bulk);
+            });
 
 //        factory(App\Cluster::class, 50)->create();
         /*

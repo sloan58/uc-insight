@@ -11,11 +11,11 @@
         "laravelcollective/html": "^5.1",
         "thomaswelton/laravel-gravatar": "^1.0",
         "zizaco/entrust": "dev-laravel-5",
-        "guzzlehttp/guzzle": "4.*",
         "khill/lavacharts": "2.5.*",
         "aloha/twilio": "^2.0",
         "keboola/csv": "^1.1",
-        "sabre/xml": "dev-master"
+        "sabre/xml": "dev-master",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Phone;
+use App\Eraser;
 use App\Jobs\Job;
 use App\Services\AxlSoap;
 use App\Services\PhoneDialer;
@@ -28,29 +30,52 @@ class EraseTrustList extends Job implements SelfHandling
      */
     public function handle()
     {
-        $macList = array_column($this->eraserList, 'mac');
-        $formattedEraserList = generateEraserList($macList);
-
-        foreach($this->eraserList as $row)
-        {
-            $key = array_search($row['mac'], array_column($formattedEraserList, 'DeviceName'));
-            $formattedEraserList[$key]['type'] = $row['type'];
-        }
+        $formattedEraserList = generateEraserList($this->eraserList);
 
         foreach($formattedEraserList as $device)
         {
+            //Create the Phone model
+            $phone = Phone::firstOrCreate([
+                'mac' => $device['DeviceName'],
+                'description' => $device['Description']
+            ]);
+
+            //Start creating Eraser
+            $tleObj = Eraser::create([
+                'phone_id' => $phone->id,
+                'ip_address' => $device['IpAddress'],
+                'eraser_type' => $device['type'],
+            ]);
+
+            if(isset($device['bulk_id']))
+            {
+                $tleObj->bulks()->attach($device['bulk_id']);
+            }
+
             if($device['IpAddress'] == "Unregistered/Unknown")
             {
+                $tleObj->result = 'Fail';
+                $tleObj->failure_reason = 'Unregistered/Unknown';
+                $tleObj->save();
                 continue;
             }
 
             $keys = setKeys($device['Model'],$device['type']);
 
+            if(!$keys)
+            {
+                $tleObj->result = 'Fail';
+                $tleObj->failure_reason = 'Unsupported Model';
+                $tleObj->save();
+                return;
+            }
             $dialer = new PhoneDialer($device['IpAddress']);
-            // $status = $dialer->dial($tleObj,$keys);
-            $status = $dialer->dial($keys);
+            $status = $dialer->dial($tleObj,$keys);
 
-            dd($status);
+            //Successful if returned true
+            $passFail = $status ? 'Success' : 'Fail';
+            $tleObj->result = $passFail;
+            $tleObj->save();
         }
     }
 }
