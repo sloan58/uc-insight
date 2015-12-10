@@ -37,6 +37,7 @@ If you have issues controlling the IP phones via the API you can check these set
 	http://your.cucm.ip.address/ccmcip/authenticate.jsp?UserID=yourUserName&Password=yourPassword&devicename=SEP123456789123
 
 This request will return either 'Authorized' or 'Un-Authorized'.  If you are authorized, move on to step 4.
+
 4. If you've confirm 1-3 above and are still having authentiction issues with the IP Phone, browse to the main web interface for the IP Phone (does not require authentication) and select the 'Network' menu on the left hand side.  Within this page, confirm that the authentication URL your IP phone is using matches that of the one you used in step 3 above.  Make note of the URL address including hostname/ip and port number.
 
 If you're using a custom authentication URL with a 3rd party app like InformaCast, you might need to troubleshoot a bit further but in a standard deployment these steps *should* get you through.
