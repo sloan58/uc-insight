@@ -35,6 +35,7 @@ If you have issues controlling the IP phones via the API you can check these set
 2. Make sure the user account you're attempting to control the phone with is associated to that device.
 3. After checking 1 and 2 above, if you're having authentication issues you can send a request via web browser to confirm that CUCM knows you should be able to control the phone.  The web address you can use is:
 	http://your.cucm.ip.address/ccmcip/authenticate.jsp?UserID=yourUserName&Password=yourPassword&devicename=SEP123456789123
+
 This request will return either 'Authorized' or 'Un-Authorized'.  If you are authorized, move on to step 4.
 4. If you've confirm 1-3 above and are still having authentiction issues with the IP Phone, browse to the main web interface for the IP Phone (does not require authentication) and select the 'Network' menu on the left hand side.  Within this page, confirm that the authentication URL your IP phone is using matches that of the one you used in step 3 above.  Make note of the URL address including hostname/ip and port number.
 
