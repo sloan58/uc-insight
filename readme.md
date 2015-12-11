@@ -32,7 +32,7 @@ The Certificate Eraser feature will use the IP Phones built in Web API to press 
 If you have issues controlling the IP phones via the API you can check these settings:
 
 * Make sure the 'Web Access' setting of the IP phone is enabled.
-* Make sure the user account you're attempting to control the phone with is associated to that device.
+* Make sure the user account you're attempting to control the phone with is associated to that device. (The app will do this for you, but a good setting to check while troubleshooting)
 * After checking the steps above, if you're having authentication issues you can send a request via web browser to confirm that CUCM knows you should be able to control the phone.  The web address you can use is:
 	http://your.cucm.ip.address/ccmcip/authenticate.jsp?UserID=yourUserName&Password=yourPassword&devicename=SEP123456789123
 
