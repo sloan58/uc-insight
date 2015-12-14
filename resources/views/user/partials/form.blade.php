@@ -25,7 +25,9 @@
 </div>
 <!--  Form Input -->
 <div class="form-group">
-    {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+    <div class="box-footer">
+        {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+    </div>
 </div>
 
 @section('scripts')

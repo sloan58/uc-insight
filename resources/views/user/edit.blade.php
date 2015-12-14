@@ -2,25 +2,23 @@
 
 @section('content')
 
-    <div class="container-fluid table-top">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3>{{$user->name}} User Settings</h3>
-                    </div>
-                    <div class="panel-body">
-                        {!! Form::model($user, ['route' => ['user.update', $user->name], 'method' => 'PUT']) !!}
+    <div class="col-md-10 col-md-offset-1 table-top">
+         <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title pull-left">{{$user->name}} User Settings</h3>
+            </div>
+            {!! Form::model($user, ['route' => ['user.update', $user->name], 'method' => 'PUT']) !!}
 
-                        {!! Form::open(['route' => 'user.store']) !!}
+            {!! Form::open(['route' => 'user.store']) !!}
+            <div class="box-body"> 
 
-                        @include('user.partials.form')
+                @include('user.partials.form')
 
-                        {!! Form::close() !!}
-                    </div>
-                </div>
+            {!! Form::close() !!}
             </div>
         </div>
     </div>
+
+@include('user.partials.delete-modal', ['object' => 'User', 'name' => $user->name])
 
 @endsection

@@ -15,7 +15,8 @@
         "aloha/twilio": "^2.0",
         "keboola/csv": "^1.1",
         "sabre/xml": "dev-master",
-        "guzzlehttp/guzzle": "^6.1"
+        "guzzlehttp/guzzle": "^6.1",
+        "predis/predis": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

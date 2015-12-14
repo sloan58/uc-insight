@@ -57,7 +57,6 @@ class AxlSoap extends SoapClient {
     }
 
     /**
-     * @param $appUserId
      * @return \Exception|\SoapFault
      */
     public function getAxlUser()
@@ -74,7 +73,6 @@ class AxlSoap extends SoapClient {
     }
 
     /**
-     * @param $appUserId
      * @param $devices
      * @return \Exception|SoapFault
      */
@@ -96,4 +94,33 @@ class AxlSoap extends SoapClient {
         }
     }
 
+    /**
+     * @param $devicePoolName
+     * @return \Exception|\SoapFault
+     */
+    public function getDPool($devicePoolName)
+    {
+        try {
+            return $this->getDevicePool([
+                'name' => $devicePoolName
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }
+    }
+
+     /**
+     * @param $cssName
+     * @return \Exception|\SoapFault
+     */
+    public function getCallingSearchSpace($cssName)
+    {
+        try {
+            return $this->getCss([
+                'name' => $cssName
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }
+    }
 }

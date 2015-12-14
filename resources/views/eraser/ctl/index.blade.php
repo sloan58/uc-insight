@@ -1,24 +1,13 @@
 @extends('app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row page-tctle-row">
-        <div class="col-md-6">
-            <h3>CTL <small>» Listing</small></h3>
-        </div>
-        <div class="col-md-6 text-right">
-            <button type="button" class="btn btn-success btn-md"
-                      onclick="erase_ctl()">
-                <i class="fa fa-plus-circle fa-lg"></i>
-                Erase CTLs
-          </button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-
-            <table id="ctls-table" class="table table-striped row-border">
+<div class="col-md-10 col-md-offset-1 table-top">
+         <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title pull-left">CTL List</h3>
+            </div>
+            <div class="box-body"> 
+                <table id="ctls-table" class="table">
                 <thead>
                 <tr>
                     <th>Phone Name</th>

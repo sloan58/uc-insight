@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('devicepool', 'DevicePoolMigrationController@getDevicePool');
+
 //Dashboard
 Route::get('/', [
     'as' => 'home',

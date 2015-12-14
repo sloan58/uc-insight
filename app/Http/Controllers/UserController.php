@@ -93,7 +93,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        User::destroy($user->id);
+        dd(User::destroy($user->id));
 
         Flash::success('User Deleted!');
 
