@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use SoapClient;
 use App\Services\AxlSoap;
 use App\Exceptions\SoapException;
 
@@ -21,11 +22,11 @@ class AxlDestinationCluster extends AxlSoap {
     public function __construct()
     {
 
-        parent::__construct(storage_path() . '/app/axl/10.5/AXLAPI.wsdl',
+        SoapClient::__construct(storage_path() . '/app/axl/10.5/AXLAPI.wsdl',
             [
                 'trace' => true,
                 'exceptions' => true,
-                'location' => 'https://192.168.1.120:8443/axl/',
+                'location' => 'https://10.134.174.10:8443/axl/',
                 'login' => 'UC-Insight-AXL',
                 'password' => 'A0usc1@123',
                 'stream_context' => stream_context_create(array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false)))

@@ -123,4 +123,86 @@ class AxlSoap extends SoapClient {
             throw new SoapException($e);
         }
     }
+
+    /**
+     * @param $partitionName
+     * @return \Exception|\SoapFault
+     */
+    public function getPartition($partitionName)
+    {
+        try {
+            return $this->getRoutePartition([
+                'name' => $partitionName
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }
+    }
+
+    /**
+     * @param $timeScheduleName
+     * @return \Exception|\SoapFault
+     */
+    public function getTimeSch($timeScheduleName)
+    {
+        try {
+            return $this->getTimeSchedule([
+                'name' => $timeScheduleName
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }
+    }
+
+    /**
+     * @return \Exception|\SoapFault
+     */
+    public function getCssList()
+    {
+         try {
+            return $this->listCss([
+                'returnedTags' => [
+                    'name' => ''
+                ],
+                'searchCriteria' => [
+                    'name' => '%'
+                ]
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }   
+    }
+
+    public function getPtList()
+    {
+         try {
+            return $this->listRoutePartition([
+                'returnedTags' => [
+                    'name' => '',
+                    'index' => ''
+                ],
+                'searchCriteria' => [
+                    'name' => '%'
+                ]
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }   
+    }
+
+    public function getTimePeriodList()
+    {
+         try {
+            return $this->listTimePeriod([
+                'returnedTags' => [
+                    'name' => '',
+                ],
+                'searchCriteria' => [
+                    'name' => '%'
+                ]
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
+        }   
+    }
 }

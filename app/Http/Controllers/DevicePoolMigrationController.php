@@ -17,74 +17,176 @@ class DevicePoolMigrationController extends Controller
 		$axlSourceCluster = new AxlSourceCluster;
 		$axlDestinationCluster = new AxlDestinationCluster;
 	
+		$dpName = 'AK-ANCH-4TH_DP';
 		/*
 		Get device pool to gather data and make sure
 		it exists on the source cluster.
 		 */
-    	$devicePool = $axlSourceCluster->getDPool('Karma-HQ-DP');
+    	$devicePool = $axlSourceCluster->getDPool($dpName);
+
+    	/*
+    	Get a list of configuration items we'll be checking on the
+    	destination cluster.  Keeping the local copy via 'List' method
+    	will reduce the number of API calls needed.
+    	 */
+    	$result = $axlDestinationCluster->getCssList();
+    	foreach($result->return->css as $key => $value)
+    	{
+    		$destinationClusterCssList[] = $value->name;
+    	}
+
+    	$result = $axlDestinationCluster->getPtList();
+    	foreach($result->return->routePartition as $key => $value)
+    	{
+    		$destinationClusterPtList[] = $value->name;
+    	}
+
+    	$result = $axlDestinationCluster->getTimePeriodList();
+    	foreach($result->return->timePeriod as $key => $value)
+    	{
+    		$destinationClusterTimePeriodList[] = $value->name;
+    	}
 
 		/*
 		Gather all CSS columns from the device pool table
 		 */
 		$result = $axlSourceCluster->executeQuery("SELECT * FROM syscolumns where tabid = (select tabid from systables where tabname = 'devicepool') AND colname like 'fkcallingsearchspace%'");
-		$dpCssList = $result->return->row;
+		$devicePoolCssColumnList = $result->return->row;
 		
 		/*
 		Iterate over each CSS column to see if it's
 		populated for the device pool settings.  
 		 */
-		$iterCssList = [];
-		foreach($dpCssList as $css)
+		$devicePoolPopulatedCssList = [];
+		foreach($devicePoolCssColumnList as $css)
 		{
 
-			$result = $axlSourceCluster->executeQuery('SELECT c.name FROM callingsearchspace c INNER JOIN devicepool dp on dp.' . $css->colname . ' = c.pkid WHERE dp.name = "Karma-HQ-DP"');
+			/*
+			Query CSS column in source cluster to see if it's populated
+			 */
+			$result = $axlSourceCluster->executeQuery('SELECT c.name FROM callingsearchspace c INNER JOIN devicepool dp on dp.' . $css->colname . ' = c.pkid WHERE dp.name = "' . $dpName . '"');
 
 			if(isset($result->return->row))
 			{
-				$iterCssList[] = $result->return->row->name;
+				/*
+				If it's populated, add it to the list.
+				 */
+				$devicePoolPopulatedCssList[] = $result->return->row->name;
 			}
 		}
 
 		/*
-		Iterate over each CSS that was set in the source cluster.
-		If it already exists in the destination, mark it complete.
-		If it does not exist in the destination cluster, create it!
+		Create an array of CSS's that don't exist in the destination cluster
 		 */
-		foreach($iterCssList as $css)
-		{
-			// Check the destination cluster
-			// $result = $axlDestinationCluster->executeQuery("SELECT count(*) FROM callingsearchspace WHERE name = '{$css}'");
-			$result = $axlDestinationCluster->executeQuery("SELECT count(*) FROM callingsearchspace WHERE name = 'Ham'");
+		$toCreateCssList = array_diff($devicePoolPopulatedCssList, $destinationClusterCssList);
 
-			// CSS exists in destination.
-			if($result->return->row->count == "1")
+		/*
+		Track CSS's that already exist in the destination cluster.
+		 */
+		$alreadyCreatedCssList = array_intersect($devicePoolPopulatedCssList, $destinationClusterCssList);
+
+		/*
+		Add each CSS that does exist to the 'completed' set
+		 */
+		foreach($alreadyCreatedCssList as $css)
+		{
+			// Add CSS name to 'cssAlreadyConfigured' Redis set
+			Redis::sadd('cssAlreadyConfigured', $css);
+		}
+
+		/*
+		Loops through our 'toCreate' list of CSS's
+		 */
+		foreach($toCreateCssList as $css)
+		{
+			/*
+			Get CSS details from the Source Cluster
+			 */
+			$result = $axlSourceCluster->getCallingSearchSpace($css);
+			// $result = $axlSourceCluster->getCallingSearchSpace('Marty-TEST');
+
+			foreach($result->return->css->members as $partition)
 			{
-				// Add CSS name to 'cssCompleted' Redis set
-				Redis::sadd('cssCompleted', $css);
+				$partitionsArray[] = $partition->routePartitionName->_;
+			}
+
+			if(!isset($partitionsArray))
+			{
+				//No PT's in the CSS.  We can just add it here.
 				continue;
 			}
 
 			/*
-			Get CSS from Source Cluster
+			The CSS has partitions, let's add them 
+			as needed.  First, put all PT's that don't exist 
+			in the destination cluster into $toCreatePartitionList
 			 */
-			$result = $axlSourceCluster->getCallingSearchSpace($css);
+			$toCreatePartitionList = array_diff($partitionsArray, $destinationClusterPtList);
 
 			/*
-			Extract Partitions from CSS
-			 */
-			$partitions = explode(':', $result->return->css->clause);
-
-			/*
-			Iterate over each Partition to see if it
-			exists on the destination cluster
-			 */
-			foreach($partitions as $partition)
+			Track Partitions that already exist in the destination cluster.
+		 	*/
+			$alreadyCreatedPartitionList = array_intersect($partitionsArray, $destinationClusterPtList);
+			foreach($alreadyCreatedPartitionList as $partition)
 			{
-				// Check the destination cluster
-				$result = $axlDestinationCluster->executeQuery("SELECT count(*) FROM routepartition WHERE name = '$partition'");
-				print_r($result->return->row->count);
+				// Add Parttion name to 'ptAlreadyConfigured' Redis set
+				Redis::sadd('ptAlreadyConfigured', $partition);
 			}
-		}
 
+			/*
+			Loops through our 'toCreate' list of CSS's
+		 	*/
+		 	foreach($toCreatePartitionList as $partition)
+		 	{
+		 		/*
+				Get Partition details from the Source Cluster
+			 	*/
+				$result = $axlSourceCluster->getPartition($partition);
+
+				/*
+				Get the Time Schedule attached to the partition
+				 */
+				$partitionTimeSchedule = $result->return->routePartition->timeScheduleIdName->_;
+
+				/*
+				If the time schedule object was empty,
+				create the partition.  There are no further dependencies.
+				 */
+				if($partitionTimeSchedule == '')
+				{
+					// No time schedule attached.  Go ahead and create the PT.
+					continue;
+				}
+
+				$result = $axlSourceCluster->getTimeSch($partitionTimeSchedule);
+				$timePeriods = $result->return->timeSchedule->members;
+
+				/*
+				If the time period object was empty,
+				create the time schedule.  There are no further dependencies.
+				 */
+				if(!isset($timePeriods->member))
+				{
+					// No time periods attached.  Go ahead and create the time schedule.
+					continue;
+				}
+
+				foreach($timePeriods->member as $timePeriod)
+				{
+					$timePeriodsArray[] = $timePeriod->timePeriodName->_;
+				}
+
+				$toCreateTimePeriodList = array_diff($timePeriodsArray, $destinationClusterTimePeriodList);
+
+				$alreadyCreatedTimePeriodList = array_intersect($timePeriodsArray, $destinationClusterTimePeriodList);
+
+				foreach($alreadyCreatedTimePeriodList as $timePeriod)
+				{
+					// Add Time Period name to 'timPeriodAlreadyConfigured' Redis set
+					Redis::sadd('timPeriodAlreadyConfigured', $timePeriod);
+				}
+		 	}
+		}
+		dd([$toCreatePartitionList,$toCreateCssList]);
 	}
 }
