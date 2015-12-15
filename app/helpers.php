@@ -144,7 +144,7 @@ function searchForIp($array,$value)
  * @param $logger
  * @return array
  */
-function    setKeys($model,$tleType)
+function setKeys($model,$tleType)
 {
     switch(strtolower($tleType)) {
 
@@ -478,7 +478,7 @@ function getHeaders($data)
 
 }
 
-function messagePhone($guzzle,$deviceData,$count)
+function messagePhone($deviceData,$count)
 {
     $count++;
 

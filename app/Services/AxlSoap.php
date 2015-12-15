@@ -43,6 +43,7 @@ class AxlSoap extends SoapClient {
 
     /**
      * @param $sql
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|SoapFault
      */
     public function executeQuery($sql)
@@ -57,7 +58,8 @@ class AxlSoap extends SoapClient {
     }
 
     /**
-     * @param $appUserId
+     * @throws \App\Exceptions\SoapException
+     * @internal param $appUserId
      * @return \Exception|\SoapFault
      */
     public function getAxlUser()
@@ -74,8 +76,8 @@ class AxlSoap extends SoapClient {
     }
 
     /**
-     * @param $appUserId
      * @param $devices
+     * @internal param $appUserId
      * @return \Exception|SoapFault
      */
     public function updateAxlUser($devices)
