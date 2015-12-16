@@ -42,7 +42,7 @@ class SqlController extends Controller
         $data = executeQuery($sql);
         $format = getHeaders($data);
 
-        $newSql = Sql::firstOrCreate([
+        Sql::firstOrCreate([
             'sql' => $sql
         ]);
 

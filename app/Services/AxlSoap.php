@@ -75,8 +75,9 @@ class AxlSoap extends SoapClient {
         }
     }
 
-    /**
+    /*
      * @param $devices
+     * @throws \App\Exceptions\SoapException
      * @internal param $appUserId
      * @return \Exception|SoapFault
      */
@@ -91,10 +92,8 @@ class AxlSoap extends SoapClient {
                     'device' => $devices
                 ]
             ]);
-        } catch(SoapFault $E) {
-
-            dd($E);
-            return $E;
+        } catch(SoapFault $e) {
+            throw new SoapException($e);
         }
     }
 

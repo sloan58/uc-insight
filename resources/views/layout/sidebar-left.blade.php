@@ -52,12 +52,15 @@
               'registration.store',
               'service.index',
               'service.store',
-              'reports.index'
+              'reports.index',
+              'firmware.index',
+              'firmware.store'
             ]) }}">
               <a href="#"><i class="fa fa-file-pdf-o"></i> <span>UC Reporting</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/service') }}">Service Status</a></li>
                 <li><a href="{{ url('/registration') }}">Device Registration</a></li>
+                <li><a href="{{ url('/firmware') }}">Device Firmware Report</a></li>
                 <li><a href="{{ url('/reports/device/counts') }}">Phone Counts</a></li>
               </ul>
             </li>
@@ -74,7 +77,7 @@
             'phone.show',
             'eraser.bulk.index',
             'eraser.bulk.show',
-            'eraser.bulk.create'
+            'eraser.bulk.create',
             ]) }}">
               <a href="#"><i class="fa fa-eraser"></i> <span>Cert Eraser</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GetPhoneFirmware;
 use App\Services\AxlSoap;
 use App\Services\RisSoap;
 use Goutte\Client;
@@ -33,26 +34,9 @@ class GetFirmwareController extends Controller
 			$devices[] = $phone->name;
 		}
 
-        $risArray = createRisPhoneArray($devices);
-        $sxml = new RisSoap();
-        $risResults = $sxml->getDeviceIP($risArray);
-        $finalReport = processRisResults($risResults,$risArray);
-
-            foreach ($finalReport as $key => $value)
-            {
-                if (!filter_var($value['IpAddress'], FILTER_VALIDATE_IP)) {
-                    $finalReport[$key]['Firmware'] = 'Unavailable';
-                    continue;
-                }
-
-                $client = new Client();
-//                $crawler = $client->request('GET', 'http://' . $value['IpAddress']);
-                $crawler = $client->request('GET', 'http://' . '10.132.215.48');
-
-                if ($crawler->filter('DIV TABLE TR')->eq(5)->filter('td')->eq(2)->count()) {
-                    $finalReport[$key]['Firmware'] = $crawler->filter('DIV TABLE TR')->eq(5)->filter('td')->eq(2)->text();
-                }
-            }
+        $finalReport = $this->dispatch(
+            new GetPhoneFirmware($devices)
+        );
 
         return view('firmware.show', compact('finalReport'));
     }
