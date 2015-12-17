@@ -14,9 +14,9 @@ class CreateBulkEraserPivotTable extends Migration
     {
         Schema::create('bulk_eraser', function (Blueprint $table) {
             $table->integer('bulk_id')->unsigned()->index();
-            $table->foreign('bulk_id')->references('id')->on('bulk')->onDelete('cascade');
+            $table->foreign('bulk_id')->references('id')->on('bulks')->onDelete('cascade');
             $table->integer('eraser_id')->unsigned()->index();
-            $table->foreign('eraser_id')->references('id')->on('eraser')->onDelete('cascade');
+            $table->foreign('eraser_id')->references('id')->on('erasers')->onDelete('cascade');
             $table->primary(['bulk_id', 'eraser_id']);
         });
     }
