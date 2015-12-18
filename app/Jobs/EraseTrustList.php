@@ -4,19 +4,18 @@ namespace App\Jobs;
 
 use App\Phone;
 use App\Eraser;
-use App\Jobs\Job;
-use App\Services\AxlSoap;
 use App\Services\PhoneDialer;
 use Illuminate\Contracts\Bus\SelfHandling;
 
-class EraseTrustList extends Job implements SelfHandling, ShouldQueue
+class EraseTrustList extends Job implements SelfHandling
 {
 
     private $eraserList;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param array $eraserList
      */
     public function __construct(Array $eraserList)
     {

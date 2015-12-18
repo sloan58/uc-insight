@@ -43,6 +43,7 @@ class SqlController extends Controller
         $format = getHeaders($data);
 
         Sql::firstOrCreate([
+            'sqlhash' => md5($sql),
             'sql' => $sql
         ]);
 

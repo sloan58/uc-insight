@@ -12,7 +12,7 @@ class Sql extends Model
      *
      * @var array
      */
-    protected $fillable = ['sql'];
+    protected $fillable = ['sqlhash', 'sql'];
 
     public function users()
     {

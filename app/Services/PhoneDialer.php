@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Eraser;
+use App\Exceptions\SoapException;
 use Sabre\Xml\Reader;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -34,9 +35,10 @@ class PhoneDialer {
      * @var phoneIp
      */
     private $phoneIp;
-    
+
     /**
      * @param $phoneIP
+     * @throws SoapException
      */
     function __construct($phoneIP)
     {
@@ -51,12 +53,13 @@ class PhoneDialer {
         $this->client = new Client([
             'base_uri' => 'http://' . $this->phoneIP,
             'verify' => false,
+            'connect_timeout' => 2,
             'headers' => [
                 'Accept' => 'application/xml',
                 'Content-Type' => 'application/xml'
             ],
             'auth' => [
-                    $this->cluster->username, 'something'//$this->cluster->password
+                    $this->cluster->username, $this->cluster->password
                 ],
         ]);
 
@@ -80,10 +83,10 @@ class PhoneDialer {
 
             try {
 
-                // $response = $this->client->post('http://' . $tle->ip_address . '/CGI/Execute',['body' => $xml]);
+                 $response = $this->client->post('http://' . $tle->ip_address . '/CGI/Execute',['body' => $xml]);
 
                 //Temp workaround for USC NAT
-                $response = $this->client->post('http://10.134.174.78/CGI/Execute',['body' => $xml]);
+//                $response = $this->client->post('http://10.134.174.78/CGI/Execute',['body' => $xml]);
 
             } catch (RequestException $e) {
 
@@ -92,21 +95,21 @@ class PhoneDialer {
                     //Unauthorized
                     $tle->failure_reason = "Authentication Exception";
                     $tle->save();
-                    throw new PhoneDialerException("$mac @ $ip");
+                    throw new PhoneDialerException("$mac @ $ip Authentication Exception");
                 }
                 elseif($e instanceof ConnectException)
                 {
                     //Can't Connect
                     $tle->failure_reason = "Connection Exception";
                     $tle->save();
-                    throw new PhoneDialerException("$mac @ $ip");
+                    throw new PhoneDialerException("$mac @ $ip Connection Exception");
                 }
                 else
                 {
                     //Other exception
                     $tle->failure_reason = "Unknown Exception";
                     $tle->save();
-                    throw new PhoneDialerException("$mac @ $ip --> $e->getMessage()");
+                    throw new PhoneDialerException("$mac @ $ip $e->getMessage()");
                 }
 
                 return false;
@@ -143,7 +146,7 @@ class PhoneDialer {
                 $tle->failure_reason = $errorType;
                 $tle->result = "Fail";
                 $tle->save();
-                throw new PhoneDialerException("$mac @ $ip --> $errorType");
+                throw new PhoneDialerException("$mac @ $ip $errorType");
             }
 
         }
