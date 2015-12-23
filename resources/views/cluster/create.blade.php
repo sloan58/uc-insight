@@ -1,25 +1,18 @@
 @extends('app')
 
 @section('content')
+<div class="col-md-8 col-md-offset-2 table-top">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title pull-left">New Cluster Settings</h3>
+        </div>
+        <div class="box-body">
+            {!! Form::open(['route' => 'cluster.store']) !!}
 
-    <div class="container-fluid table-top">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">New Cluster Settings</h3>
-                    </div>
-                    <div class="panel-body">
+            @include('cluster.partials.form', ['active' => false, 'version' => '10.5', 'userType' => 'application'])
 
-                        {!! Form::open(['route' => 'cluster.store']) !!}
-
-                            @include('cluster.partials.form', ['active' => false, 'version' => '10.5', 'userType' => 'application'])
-
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
+            {!! Form::close() !!}
         </div>
     </div>
-
+</div>
 @endsection

@@ -29,16 +29,20 @@
 </div>
 
 @if(isset($data) && $data != '')
-<div class="row">
-    <div class="col-sm-12">
-        <table id="sql-table" class="table table-striped table-bordered dt-responsive nowrap">
-            <thead>
-            <tr>
-            @foreach($format as $header)
-                <th>{{ ucfirst($header) }}</th>
-            @endforeach
-            </tr>
-            </thead>
+<div class="col-md-10 col-md-offset-1 ">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title pull-left"></h3>
+        </div>
+        <div class="box-body">
+            <table id="sql-table" class="table">
+                <thead>
+                    <tr>
+                    @foreach($format as $header)
+                        <th>{{ ucfirst($header) }}</th>
+                    @endforeach
+                    </tr>
+                </thead>
             <tbody>
             @foreach($data as $row)
                 <tr>

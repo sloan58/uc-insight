@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-md-10 col-md-offset-1 table-top">
+<div class="col-md-8 col-md-offset-2 table-top">
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title pull-left">{{$user->name}} User Settings</h3>
