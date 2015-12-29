@@ -302,6 +302,24 @@ function setKeys($model,$tleType)
                     ];
                     break;
 
+                case "Cisco 7821":
+                case "Cisco 7841":
+                case "Cisco 7861":
+                    return [
+                        'Init:Settings',
+                        'Key:Sleep',
+                        'Key:Settings',
+                        'Key:Sleep',
+                        'Key:KeyPad5',
+                        'Key:Sleep',
+                        'Key:KeyPad4',
+                        'Key:Sleep',
+                        'Key:Soft4',
+                        'Key:Sleep',
+                        'Key:Soft2',
+                    ];
+                    break;
+
                 default:
                     Log::error("ITL-> No model found for " . $model);
                     return false;
