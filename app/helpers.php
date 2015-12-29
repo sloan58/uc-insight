@@ -255,7 +255,7 @@ function setKeys($model,$tleType)
                     ];
                     break;
 
-                case "Cisco 8831":  //8831's interface is lazy, so we need to pause between each key press.
+                case "Cisco 8831":  //8800's interface is lazy, so we need to pause between each key press.
                     return [
                         'Key:Soft3',
                         'Key:Sleep',
@@ -269,13 +269,30 @@ function setKeys($model,$tleType)
                     ];
                     break;
 
-                case "Cisco 8841":
+                case "Cisco 8841":  //8800's interface is lazy, so we need to pause between each key press.
                     return [
                         'Init:Settings',
                         'Key:Sleep',
                         'Key:Settings',
                         'Key:Sleep',
                         'Key:KeyPad5',
+                        'Key:Sleep',
+                        'Key:KeyPad4',
+                        'Key:Sleep',
+                        'Key:KeyPad4',
+                        'Key:Sleep',
+                        'Key:Soft3',
+                    ];
+                    break;
+
+                case "Cisco 8851":  //8800's interface is lazy, so we need to pause between each key press.
+                case "Cisco 8861":
+                    return [
+                        'Init:Settings',
+                        'Key:Sleep',
+                        'Key:Settings',
+                        'Key:Sleep',
+                        'Key:KeyPad6',
                         'Key:Sleep',
                         'Key:KeyPad4',
                         'Key:Sleep',
