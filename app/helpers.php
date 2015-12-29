@@ -177,7 +177,7 @@ function setKeys($model,$tleType)
                     break;
 
                 case "Cisco 7941":
-                case "Cisco 7945":
+                case "Cisco 7942":
                 case "Cisco 7961":
                 case "Cisco 7962":
                     return [
@@ -199,6 +199,7 @@ function setKeys($model,$tleType)
                         'Init:Services'
                     ];
                     break;
+                case "Cisco 7945":
                 case "Cisco 7965":
                     return [
 
