@@ -64,7 +64,10 @@
                 <li><a href="{{ url('/reports/device/counts') }}">Phone Counts</a></li>
               </ul>
             </li>
-            <li class="treeview {{ areActiveRoutes(['autodialer.index','autodialer.bulk.index']) }}">
+            <li class="treeview {{ areActiveRoutes([
+            'autodialer.index',
+            'autodialer.bulk.index'
+            ]) }}">
               <a href="#"><i class="fa fa-phone"></i> <span>Auto Dialer</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/autodialer') }}">Single Call</a></li>
@@ -90,10 +93,21 @@
               <a href="{!! route('cdrs.index') !!}"><i class="fa fa-random"></i> <span>CDR's</span>
                 <i class=""></i></a>
             </li>
-            <li class="treeview {{ areActiveRoutes(['cluster.index','cluster.create','cluster.show','user.index','user.create','user.edit']) }}">
+            <li class="treeview {{ areActiveRoutes([
+            'cluster.index',
+            'cluster.create',
+            'cluster.show',
+            'user.index',
+            'user.create',
+            'user.edit',
+            'role.index',
+            'role.create',
+            'role.edit'
+            ]) }}">
               <a href="#"><i class="fa fa-user-secret"></i> <span>Admin Settings</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('/user') }}">Users</a></li>
+                <li><a href="{{ url('role') }}">Roles</a></li>
                 <li><a href="{{ url('/cluster') }}">Clusters</a></li>
               </ul>
             </li>

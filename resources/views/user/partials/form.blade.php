@@ -25,7 +25,7 @@
 </div>
 <!--  Form Input -->
 <div class="form-group">
-    {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+    {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
 </div>
 
 @section('scripts')
