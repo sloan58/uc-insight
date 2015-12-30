@@ -43,6 +43,7 @@ class AxlSoap extends SoapClient {
 
     /**
      * @param $sql
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|SoapFault
      */
     public function executeQuery($sql)
@@ -57,6 +58,7 @@ class AxlSoap extends SoapClient {
     }
 
     /**
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getAxlUser()
@@ -96,6 +98,7 @@ class AxlSoap extends SoapClient {
 
     /**
      * @param $devicePoolName
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getDPool($devicePoolName)
@@ -109,8 +112,9 @@ class AxlSoap extends SoapClient {
         }
     }
 
-     /**
+    /**
      * @param $cssName
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getCallingSearchSpace($cssName)
@@ -126,6 +130,7 @@ class AxlSoap extends SoapClient {
 
     /**
      * @param $partitionName
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getPartition($partitionName)
@@ -141,6 +146,7 @@ class AxlSoap extends SoapClient {
 
     /**
      * @param $timeScheduleName
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getTimeSch($timeScheduleName)
@@ -155,6 +161,7 @@ class AxlSoap extends SoapClient {
     }
 
     /**
+     * @throws \App\Exceptions\SoapException
      * @return \Exception|\SoapFault
      */
     public function getCssList()
@@ -173,6 +180,10 @@ class AxlSoap extends SoapClient {
         }   
     }
 
+    /**
+     * @return mixed
+     * @throws \App\Exceptions\SoapException
+     */
     public function getPtList()
     {
          try {
@@ -190,6 +201,10 @@ class AxlSoap extends SoapClient {
         }   
     }
 
+    /**
+     * @return mixed
+     * @throws \App\Exceptions\SoapException
+     */
     public function getTimePeriodList()
     {
          try {
@@ -204,5 +219,39 @@ class AxlSoap extends SoapClient {
         } catch(SoapFault $e) {
             throw new SoapException($e);
         }   
+    }
+
+    /**
+     * @param $listResponse
+     * @param $listObjectType
+     * @return array
+     */
+    public function processListRequest($listResponse, $listObjectType)
+    {
+        if(isset($listResponse->return->{$listObjectType}))
+        {
+            if(!is_array($listResponse->return->{$listObjectType}))
+            {
+                $configList[] = $listResponse->return->{$listObjectType}->name;
+            } else
+            {
+                foreach($listResponse->return->{$listObjectType} as $key => $value)
+                {
+                    $configList[] = $value->name;
+                }
+            }
+        }
+        return $configList;
+    }
+
+    public function addCssViaSourceObject($cssObj)
+    {
+        try {
+            return $this->addCss([
+                'css' => $cssObj
+            ]);
+        } catch(SoapFault $e) {
+            throw new SoapException($e->getMessage());
+        }
     }
 }

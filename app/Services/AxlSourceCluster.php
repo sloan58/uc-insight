@@ -26,7 +26,7 @@ class AxlSourceCluster extends AxlSoap {
             [
                 'trace' => true,
                 'exceptions' => true,
-                'location' => 'https://10.134.175.10:8443/axl/',
+                'location' => 'https://192.168.1.120:8443/axl/',
                 'login' => 'UC-Insight-AXL',
                 'password' => 'A0usc1@123',
                 'stream_context' => stream_context_create(array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false)))

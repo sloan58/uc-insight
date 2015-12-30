@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('devicepool', 'DevicePoolMigrationController@getDevicePool');
+Route::get('devicepool', 'DevicePoolMigration\DevicePoolMigrationMainController@index');
 
 //Dashboard
 Route::get('/', [
