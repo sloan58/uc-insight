@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\PlaceTwilioCall;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Keboola\Csv\CsvFile;
 use Laracasts\Flash\Flash;
+use Illuminate\Http\Request;
+use App\Jobs\ProcessTwilioCall;
+use App\Http\Controllers\Controller;
+use App\Exceptions\AutoDialerException;
 
 class AutoDialerController extends Controller
 {
@@ -39,7 +40,7 @@ class AutoDialerController extends Controller
         $say = $request->say;
         $type = $request->type;
 
-       $this->dispatch(new PlaceTwilioCall([[$number,$say,$type]]));
+       $this->dispatch(new ProcessTwilioCall([[$number,$say,$type]]));
 
         Flash::success('Phone Call Submitted!  Check the call logs for status.');
 
@@ -58,6 +59,7 @@ class AutoDialerController extends Controller
 
     /**
      * @param Request $request
+     * @throws \App\Exceptions\AutoDialerException
      * @return \Illuminate\Http\RedirectResponse
      */
     public function bulkStore(Request $request)
@@ -74,11 +76,17 @@ class AutoDialerController extends Controller
 
         $csv = '';
 
-        foreach($csvFile as $row)
+        foreach($csvFile as $key => $row)
         {
+            if(count($row) > 3)
+            {
+                $message = 'CSV Formatting Problem on Line ' . ++$key;
+                Throw new AutoDialerException($message);
+            }
+
             $csv[] = $row;
         }
-        $this->dispatch(new PlaceTwilioCall($csv));
+        $this->dispatch(new ProcessTwilioCall($csv));
 
         Flash::success('Phone Call Submitted!  Check the call logs for status.');
 

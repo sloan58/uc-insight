@@ -73,6 +73,16 @@ class Handler extends ExceptionHandler
         }
 
         /*
+        * Twilio Fault Exceptions
+        */
+        if($e instanceof AutoDialerException)
+        {
+            Flash::error('AutoDialer Error: ' . $e->message);
+            Log::error('AutoDialer Error: ', [ $e->message ]);
+            return redirect()->back();
+        }
+
+        /*
          * Twilio Fault Exceptions
          */
         if($e instanceof TwilioException)
