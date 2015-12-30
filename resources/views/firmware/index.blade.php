@@ -2,32 +2,22 @@
 
 @section('content')
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Choose a Cluster for Firmware Reporting</div>
-                    <div class="panel-body text-center">
+    <div class="col-md-10 col-md-offset-1 table-top">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title pull-left">Firmware Reporting</h3>
+            </div>
+            <div class="box-body"> 
+            <p>
+                This app will check each phone in a device pool and report back on the firmware version it is running.</br>
+                Please select a Device Pool below and submit the request.
+            </p>
+            {!! Form::open(['route' => 'firmware.store']) !!}
 
-                        {!! Form::open(['route' => 'firmware.store']) !!}
+                @include('firmware.partials.form', [])
 
-                        <!--  Form Input -->
-                        <div class="form-group">
-                            {!! Form::label('Cluster Selector','Cluster Selector') !!}
-                            {!! Form::select('cluster', $clusters) !!}
-                        </div>
-
-                        <!-- Submit Form Input -->
-                        <div class="form-group">
-                            {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
-                        </div>
-
-                        {!! Form::close() !!}
-
-                    </div>
-                </div>
+            {!! Form::close() !!}
             </div>
         </div>
     </div>
-
-@endsection
+@stop

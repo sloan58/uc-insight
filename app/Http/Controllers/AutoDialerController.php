@@ -39,12 +39,8 @@ class AutoDialerController extends Controller
         $say = $request->say;
         $type = $request->type;
 
-//        $this->dispatch(new PlaceTwilioCall([[$number,$say,$type]]));
+       $this->dispatch(new PlaceTwilioCall([[$number,$say,$type]]));
 
-        $call = (new PlaceTwilioCall([[$number,$say,$type]]))->delay(60);
-
-        $this->dispatch($call);
-        
         Flash::success('Phone Call Submitted!  Check the call logs for status.');
 
         return redirect()->action('AutoDialerController@index');

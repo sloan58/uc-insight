@@ -1,24 +1,18 @@
 @extends('app')
 
 @section('content')
+<div class="col-md-8 col-md-offset-2 table-top">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title pull-left">New User Setting</h3>
+        </div>
+        <div class="box-body">
+            {!! Form::open(['route' => 'user.store']) !!}
 
-<div class="container-fluid table-top">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3>New User Settings</h3>
-                </div>
-                <div class="panel-body">
-                    {!! Form::open(['route' => 'user.store']) !!}
+                @include('user.partials.form')
 
-                    @include('user.partials.form')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
-
 @endsection

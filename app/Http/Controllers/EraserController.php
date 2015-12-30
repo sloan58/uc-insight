@@ -19,7 +19,7 @@ class EraserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return \App\Http\Controllers\EraserController
      */
     public function __construct()
     {
@@ -41,6 +41,7 @@ class EraserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Illuminate\Http\Request $request
      * @return Response
      */
     public function itlStore(Request $request)
@@ -71,6 +72,7 @@ class EraserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Illuminate\Http\Request $request
      * @return Response
      */
     public function ctlStore(Request $request)
@@ -98,7 +100,8 @@ class EraserController extends Controller
     }
 
     /**
-     * @param  Bulk
+     * @param \App\Bulk $bulk
+     * @internal param $Bulk
      * @return Response
      */
     public function bulkShow(Bulk $bulk)
@@ -115,7 +118,8 @@ class EraserController extends Controller
     }
 
     /**
-     * @param  Request
+     * @param \Illuminate\Http\Request $request
+     * @internal param $Request
      * @return Response
      */
     public function bulkStore(Request $request)

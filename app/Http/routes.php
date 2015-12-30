@@ -121,6 +121,16 @@ Route::get('phone/{phone}', [
     'uses' => 'PhoneController@show'
 ]);
 
+// Phone Firmware
+Route::get('firmware',[
+    'as'   => 'firmware.index',
+    'uses' =>  'GetFirmwareController@index'
+]);
+Route::post('firmware/{devicepool}', [
+    'as'   => 'firmware.store',
+    'uses' => 'GetFirmwareController@store'
+]);
+
 //User
 Route::resource('user', 'UserController');
 

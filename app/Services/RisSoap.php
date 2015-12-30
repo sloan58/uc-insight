@@ -67,7 +67,6 @@ class RisSoap extends SoapClient{
             // It's a real error, let's bail!
             throw new SoapException($e->faultstring);
         }
-
         return $response["SelectCmDeviceResult"];
     }
 }
