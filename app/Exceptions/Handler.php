@@ -73,6 +73,16 @@ class Handler extends ExceptionHandler
         }
 
         /*
+         * SQL Query Exceptions
+         */
+        if($e instanceof SqlQueryException)
+        {
+            Flash::error('SQL Query Error: ' . $e->message);
+            Log::error('SQL Query Error: ', [ $e->message ]);
+            return redirect()->back();
+        }
+
+        /*
          * Twilio Fault Exceptions
          */
         if($e instanceof TwilioException)

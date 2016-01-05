@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-
 <div class="container-fluid table-top">
     <div class="row sql-box">
         <div class="col-md-8 col-md-offset-3">
@@ -45,7 +44,7 @@
                 </thead>
             <tbody>
             @foreach($data as $row)
-                <tr>
+            <tr>
                 @foreach($format as $header)
                     <td>{{ $row->$header }}</td>
                 @endforeach
