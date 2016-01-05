@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\SqlQueryException;
 use App\Services\AxlSoap;
 use App\Services\RisSoap;
 use App\Exceptions\SoapException;
@@ -423,6 +424,11 @@ function setKeys($model,$tleType)
 | Very useful for navigation, marking if the link is active.
 |
 */
+/**
+ * @param $route
+ * @param string $output
+ * @return string
+ */
 function isActiveRoute($route, $output = "active")
 {
     if (Route::currentRouteName() == $route) return $output;
@@ -437,6 +443,11 @@ function isActiveRoute($route, $output = "active")
 | Very useful for navigation, marking if the link is active.
 |
 */
+/**
+ * @param array $routes
+ * @param string $output
+ * @return string
+ */
 function areActiveRoutes(Array $routes, $output = "active")
 {
     foreach ($routes as $route)
@@ -454,6 +465,11 @@ function areActiveRoutes(Array $routes, $output = "active")
 | Compare passwords to see if they need to be updated in the database.
 |
 */
+/**
+ * @param $currentPassword
+ * @param $toCheckPassword
+ * @return mixed
+ */
 function checkPassword($currentPassword,$toCheckPassword)
 {
     if($currentPassword != $toCheckPassword && $toCheckPassword != '')
@@ -467,6 +483,11 @@ function checkPassword($currentPassword,$toCheckPassword)
     }
 }
 
+/**
+ * @param $sql
+ * @return array
+ * @throws App\Exceptions\SoapException
+ */
 function executeQuery($sql)
 {
     $axl = new AxlSoap();
@@ -491,6 +512,10 @@ function executeQuery($sql)
     }
 }
 
+/**
+ * @param $deviceList
+ * @return mixed
+ */
 function generateEraserList($deviceList)
 {
     $macList = array_column($deviceList, 'mac');
@@ -529,12 +554,15 @@ function generateEraserList($deviceList)
     return $risPortResults;
 }
 
+/**
+ * @param $data
+ * @return bool|void
+ */
 function getHeaders($data)
 {
     if(isset($data[0]))
     {
-        return array_keys((array)$data[0]);
-
+        return checkForUniqueSqlHeaders(array_keys((array)$data[0]));
     } else {
 
         return false;
@@ -542,6 +570,29 @@ function getHeaders($data)
 
 }
 
+
+/**
+ * @param $sqlHeaders
+ * @return mixed
+ * @throws App\Exceptions\SqlQueryException
+ */
+function checkForUniqueSqlHeaders($sqlHeaders)
+{
+    $uniqueSqlHeaders = array_unique($sqlHeaders);
+
+    if(count($uniqueSqlHeaders) != $sqlHeaders)
+    {
+        Throw new SqlQueryException('Please use unique column names');
+    }
+
+    return $sqlHeaders;
+}
+
+/**
+ * @param $deviceData
+ * @param $count
+ * @return bool
+ */
 function messagePhone($deviceData,$count)
 {
     $count++;

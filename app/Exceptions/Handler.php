@@ -73,12 +73,12 @@ class Handler extends ExceptionHandler
         }
 
         /*
-        * Twilio Fault Exceptions
-        */
-        if($e instanceof AutoDialerException)
+         * SQL Query Exceptions
+         */
+        if($e instanceof SqlQueryException)
         {
-            Flash::error('AutoDialer Error: ' . $e->message);
-            Log::error('AutoDialer Error: ', [ $e->message ]);
+            Flash::error('SQL Query Error: ' . $e->message);
+            Log::error('SQL Query Error: ', [ $e->message ]);
             return redirect()->back();
         }
 
